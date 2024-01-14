@@ -1,6 +1,7 @@
 import "./Detail.css";
 import axios from "axios";
 import CartHandler from "../../handlers/CartHandler/CartHandler";
+import { url } from "../../values/values";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,7 +26,7 @@ function Detail() {
   useEffect(() => {
     const detailHandler = async (id) => {
       try {
-        const { data } = await axios(`http://localhost:8000/book/${id}/`);
+        const { data } = await axios(`${url}${id}/`);
 
         if (data) {
           console.log("data", data);

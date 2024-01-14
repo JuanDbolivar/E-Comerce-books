@@ -3,6 +3,7 @@ import axios from "axios";
 import Cards from "../component/Cards/Cards";
 import Paginado from "../component/Paginado/Paginado";
 import FormSelect from "../component/FormSelect/FormSelect";
+import { url } from "../values/values";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -26,7 +27,7 @@ function Home({ rerenderKey }) {
       const homeFuntion = async () => {
         try {
           const { data } = await axios(`
-          http://localhost:8000/book/?page_size=${page}`);
+          ${url}?page_size=${page}`);
           if (data) {
             const totalPages = Math.ceil(data.count / 10);
             dispatch(setTotalData(totalPages));
@@ -42,9 +43,7 @@ function Home({ rerenderKey }) {
 
   useEffect(() => {
     const cositas = async () => {
-      const { data } = await axios(
-        "http://localhost:8000/list-author-year-gender/list/"
-      );
+      const { data } = await axios(`${url}list-author-year-gender/list/`);
       if (data) {
         dispatch(setDataA(data.authors));
         dispatch(setDataY(data.years));
