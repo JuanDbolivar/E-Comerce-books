@@ -27,7 +27,7 @@ function Home({ rerenderKey }) {
       const homeFuntion = async () => {
         try {
           const { data } = await axios(`
-          ${url}?page_size=${page}`);
+          ${url}book/?page_size=${page}`);
           if (data) {
             const totalPages = Math.ceil(data.count / 10);
             dispatch(setTotalData(totalPages));

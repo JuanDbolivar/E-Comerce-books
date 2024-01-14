@@ -26,7 +26,7 @@ function Detail() {
   useEffect(() => {
     const detailHandler = async (id) => {
       try {
-        const { data } = await axios(`${url}${id}/`);
+        const { data } = await axios(`${url}book/${id}/`);
 
         if (data) {
           console.log("data", data);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook, setTotalData } from "../../redux/reducers/Books/booksSlice";
 import {
@@ -9,21 +10,19 @@ import {
   setBookOrganization,
   setBookPage,
 } from "../../redux/reducers/BookFilter/BookFilterSlice";
+import { url } from "../../values/values";
 
 export function FilterHandler() {
   const dispatch = useDispatch();
   const { author, year, gender, value, organization, page } = useSelector(
     (state) => state.bookFilter
   );
-  const handlerAutorChange = (e) => {
-    dispatch(setBookAuthor({ author: e.target.value }));
-  };
-  const handlerYearChange = (e) => {
-    dispatch(setBookAño({ year: e.target.value }));
-  };
-  const handlerGenderChange = (e) => {
-    console.log("e", e);
-    dispatch(setBookGenero({ gender: e.target.value }));
+
+  const handlerAuthor = async () => {
+    const { data } = await axios.get(`${url}book/?search=${author}`);
+    if (data) {
+      console.log("data", data);
+    }
   };
 
   const handlerSortChange = (e) => {
@@ -105,9 +104,7 @@ export function FilterHandler() {
 
   return {
     handlerFilter,
-    handlerAutorChange,
-    handlerYearChange,
-    handlerGenderChange,
+    handlerAuthor,
     handlerSortChange,
     handlerSort,
     handlerClearFilters,
