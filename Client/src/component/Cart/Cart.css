@@ -1,0 +1,20 @@
+.table {
+  margin-top: 3%;
+}
+
+.button {
+  position: relative;
+  bottom: 0.01rem;
+}
+
+.clean {
+  margin: 1%;
+}
+.buy {
+  margin: 1%;
+}
+.quantity {
+  margin: 5%;
+}
+
+

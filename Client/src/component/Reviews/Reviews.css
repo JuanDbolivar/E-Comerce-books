@@ -1,0 +1,31 @@
+.isReview {
+  padding: 8px 12px;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 15px 5px;
+}
+
+.isReview:hover {
+  background-color: #2e54d1;
+  color: #fff;
+}
+.send {
+  padding: 8px 12px;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 15px 5px;
+}
+
+.send:hover {
+  background-color: #2e54d1;
+  color: #fff;
+}
+

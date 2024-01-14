@@ -1,0 +1,26 @@
+.Contenido-selects {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 1px solid;
+  border-radius: 8px;
+  margin-top: 38%;
+  background-color: #2e54d1;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.Contenido-selects label {
+  color: white;
+}
+
+.li {
+  width: 300px;
+  margin: 10px;
+}
+.orden-boton {
+  display: flex;
+}
+
+.clear {
+  margin: 5% 4%;
+}

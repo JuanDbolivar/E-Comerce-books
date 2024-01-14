@@ -1,0 +1,14 @@
+.bookImage {
+  width: 400px;
+  height: 500px;
+}
+
+.column {
+  margin: 3%;
+}
+
+.content{
+  text-align: center;
+  margin-top: 7%;
+  margin-right: 5%;
+}

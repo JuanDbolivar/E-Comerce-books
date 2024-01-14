@@ -1,0 +1,81 @@
+.buttonLogin {
+  padding: 8px 12px;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.buttonLogin:hover {
+  background-color: #2e54d1;
+  color: #fff;
+}
+
+.buttonIngresar {
+  padding: 8px 12px;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.buttonIngresar:hover {
+  background-color: rgb(46, 45, 45);
+  color: #fff;
+}
+
+.bienvenido {
+  position: relative;
+  top: 25%;
+  right: 0%;
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .bienvenido {
+    position: relative;
+    top: 25%;
+    right: 0%;
+    /* position: absolute; */
+    /* z-index: 10; */
+    /* top: 15%; */
+    /* right: 1410%; */
+  }
+}
+
+.buttonLogout {
+  position: relative;
+  top: 24%;
+  left: 57%;
+  padding: 8px 12px;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.buttonLogout:hover {
+  background-color: rgb(46, 45, 45);
+  color: #fff;
+}
+
+.modal-card{
+  padding: 20px 10px;
+  border: solid 1px;
+  border-radius: 10px;
+  background-color: #2e54d1;
+}
+
+.O{
+  margin-top: 1%;
+  margin-left: 50%;
+}
+
+

@@ -1,0 +1,48 @@
+.card {
+  border-radius: 10px;
+  width: 280px;
+  height: 550px;
+  padding: 10px;
+  margin: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+  transition: transform 0.5s;
+}
+
+.card-content {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.card-content h1{ 
+  color: black;
+}
+.card img {
+  width: 250px;
+  height: 350px;
+}
+.card-tarjeta {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+.card:hover {
+  transform: scale(1.1);
+}
+.price {
+  margin-left: 4%;
+  margin-bottom: 5%;
+}
+
+/* -dissable */
+
+.card-dissable {
+  border-radius: 4px;
+  width: 280px;
+  height: 550px;
+  padding: 10px;
+  margin: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+  background-color: white;
+  opacity: 0.8;
+}
