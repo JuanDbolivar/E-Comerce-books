@@ -1,5 +1,5 @@
 import "./FormSelect.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Filter } from "../../handlers/FilterHandler/Filter";
 import { FilterHandler } from "../../handlers/FilterHandler/FilterHandler";
@@ -7,6 +7,7 @@ import {
   setBookAuthor,
   setBookAño,
   setBookGenero,
+  setBookFilters,
   setBookValue,
 } from "../../redux/reducers/BookFilter/BookFilterSlice";
 
@@ -18,11 +19,12 @@ function FormSelect() {
     (state) => state.bookFilter
   );
 
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState([]);
   const { sortOption } = Filter();
   const {
-    handlerFilter,
-    handlerAuthor,
+    // handlerFilter,
+    handleUnchecked,
+    handlerCheckbox,
     handlerSortChange,
     handlerSort,
     handlerClearFilters,
@@ -34,11 +36,11 @@ function FormSelect() {
     }
   }, [page]);
 
-  useEffect(() => {
-    if (author || year || gender) {
-      handlerFilter();
-    }
-  }, [page]);
+  // useEffect(() => {
+  //   if (author || year || gender) {
+  //     handlerFilter();
+  //   }
+  // }, [page]);
 
   return (
     <div>
@@ -51,8 +53,15 @@ function FormSelect() {
               name={g}
               id={g}
               value={g}
-              onChange={(e) => {
-                dispatch(setBookGenero({ gender: e.target.value }));
+              onChange={async (e) => {
+                if (e.target.checked) {
+                  dispatch(setBookFilters({ filters: e.target.value }));
+                  dispatch(setBookGenero({ gender: e.target.value }));
+                  handlerCheckbox(e.target.value);
+                } else {
+                  dispatch(setBookAuthor({ gender: "" }));
+                  handleUnchecked();
+                }
               }}
             />
             {g}
@@ -68,9 +77,15 @@ function FormSelect() {
               <input
                 type="checkbox"
                 value={a}
-                onChange={(e) => {
-                  dispatch(setBookAuthor({ author: e.target.value }));
-                  handlerAuthor();
+                onChange={async (e) => {
+                  if (e.target.checked) {
+                    dispatch(setBookFilters({ filters: e.target.value }));
+                    dispatch(setBookAuthor({ author: e.target.value }));
+                    handlerCheckbox(e.target.value);
+                  } else {
+                    dispatch(setBookAuthor({ author: "" }));
+                    handleUnchecked();
+                  }
                 }}
               />
               {a}
@@ -88,8 +103,15 @@ function FormSelect() {
               name=""
               id=""
               value={y}
-              onChange={(e) => {
-                setBookAño({ year: e.target.value });
+              onChange={async (e) => {
+                if (e.target.checked) {
+                  dispatch(setBookFilters({ filters: e.target.value }));
+                  dispatch(setBookAño({ year: e.target.value }));
+                  handlerCheckbox(e.target.value);
+                } else {
+                  dispatch(setBookAño({ year: "" }));
+                  handleUnchecked();
+                }
               }}
             />
             {y}

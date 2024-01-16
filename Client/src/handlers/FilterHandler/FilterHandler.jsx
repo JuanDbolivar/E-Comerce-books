@@ -1,27 +1,53 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { url } from "../../values/values";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook, setTotalData } from "../../redux/reducers/Books/booksSlice";
 import {
   setBookAuthor,
   setBookAño,
   setBookGenero,
+  setBookFilters,
   setBookValue,
   setBookOrganization,
   setBookPage,
 } from "../../redux/reducers/BookFilter/BookFilterSlice";
-import { url } from "../../values/values";
 
 export function FilterHandler() {
   const dispatch = useDispatch();
-  const { author, year, gender, value, organization, page } = useSelector(
-    (state) => state.bookFilter
-  );
+  const { author, year, gender, value, organization, page, filters } =
+    useSelector((state) => state.bookFilter);
 
-  const handlerAuthor = async () => {
-    const { data } = await axios.get(`${url}book/?search=${author}`);
+  const handleUnchecked = async () => {
+    const { data } = await axios.get(`${url}/book/`);
     if (data) {
-      console.log("data", data);
+      dispatch(setBook(data.results));
+    }
+  };
+
+  const handlerCheckbox = async (e) => {
+    console.log("filters", filters);
+    if (filters.length === 0) {
+      const { data } = await axios.get(`${url}book/?search=${e}`);
+      if (data) {
+        dispatch(setBook(data.results));
+        // console.log("data.results", data.results);
+      }
+    }
+    if (filters.length === 1) {
+      const { data } = await axios.get(
+        `${url}book/?search=${filters[0]}&search=${e}`
+      );
+      if (data) {
+        dispatch(setBook(data.results));
+      }
+    }
+    if (filters.length === 2) {
+      const { data } = await axios.get(
+        `${url}book/?search=${filters[0]}&search=${filters[1]}&search=${e}`
+      );
+      if (data) {
+        dispatch(setBook(data.results));
+      }
     }
   };
 
@@ -66,20 +92,20 @@ export function FilterHandler() {
     }
   };
 
-  const handlerFilter = async () => {
-    try {
-      const { data } = await axios(
-        `https://e-commerce-pf-henry.onrender.com/book/filter?author=${author}&year=${year}&gender=${gender}&page=${page}`
-      );
-      if (data) {
-        const totalPages = Math.ceil(data.count / 4);
-        dispatch(setTotalData(totalPages));
-        dispatch(setBook(data.filteredBooks));
-      }
-    } catch (error) {
-      console.log("errorAxios", error.message);
-    }
-  };
+  // const handlerFilter = async () => {
+  //   try {
+  //     const { data } = await axios(
+  //       `https://e-commerce-pf-henry.onrender.com/book/filter?author=${author}&year=${year}&gender=${gender}&page=${page}`
+  //     );
+  //     if (data) {
+  //       const totalPages = Math.ceil(data.count / 4);
+  //       dispatch(setTotalData(totalPages));
+  //       dispatch(setBook(data.filteredBooks));
+  //     }
+  //   } catch (error) {
+  //     console.log("errorAxios", error.message);
+  //   }
+  // };
 
   const handlerClearFilters = async () => {
     dispatch(setBookAuthor({ author: "" }));
@@ -103,8 +129,9 @@ export function FilterHandler() {
   };
 
   return {
-    handlerFilter,
-    handlerAuthor,
+    // handlerFilter,
+    handleUnchecked,
+    handlerCheckbox,
     handlerSortChange,
     handlerSort,
     handlerClearFilters,

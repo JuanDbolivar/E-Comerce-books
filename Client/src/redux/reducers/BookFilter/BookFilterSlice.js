@@ -4,10 +4,10 @@ const initialState = {
   author: "",
   year: "",
   gender: "",
+  filters: [],
   value: "",
   organization: "",
   page: 1,
-
 };
 
 export const bookFilterSlice = createSlice({
@@ -22,6 +22,9 @@ export const bookFilterSlice = createSlice({
     },
     setBookGenero: (state, action) => {
       state.gender = action.payload.gender;
+    },
+    setBookFilters: (state, action) => {
+      state.filters = [...state.filters, action.payload.filters];
     },
     setBookValue: (state, action) => {
       state.value = action.payload.value;
@@ -39,6 +42,7 @@ export const {
   setBookAuthor,
   setBookAño,
   setBookGenero,
+  setBookFilters,
   setBookValue,
   setBookOrganization,
   setBookPage,
