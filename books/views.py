@@ -19,10 +19,10 @@ class BooksViewSet(viewsets.ModelViewSet):
     queryset = Books.objects.all()
     serializer_class = BooksSerializer
     pagination_class = BooksPagination
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'author', 'year', 'gender']
     ordering_fields = ['price', 'title']
-    ordering = ['-price', '-title']
+    ordering = ['id', '-price', '-title']
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

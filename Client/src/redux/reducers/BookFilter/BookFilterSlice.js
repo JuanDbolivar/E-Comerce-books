@@ -6,7 +6,6 @@ const initialState = {
   gender: "",
   filters: [],
   value: "",
-  organization: "",
   page: 1,
 };
 
@@ -26,11 +25,11 @@ export const bookFilterSlice = createSlice({
     setBookFilters: (state, action) => {
       state.filters = [...state.filters, action.payload.filters];
     },
+    unSetBookFilters: (state, action) => {
+      state.filters = action.payload.filters;
+    },
     setBookValue: (state, action) => {
       state.value = action.payload.value;
-    },
-    setBookOrganization: (state, action) => {
-      state.organization = action.payload.organization;
     },
     setBookPage: (state, action) => {
       state.page = action.payload.page;
@@ -43,8 +42,8 @@ export const {
   setBookAño,
   setBookGenero,
   setBookFilters,
+  unSetBookFilters,
   setBookValue,
-  setBookOrganization,
   setBookPage,
 } = bookFilterSlice.actions;
 export default bookFilterSlice.reducer;

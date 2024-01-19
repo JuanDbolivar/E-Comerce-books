@@ -1,5 +1,6 @@
 import "./Detail.css";
 import axios from "axios";
+import Reviews from "../../component/Reviews/Reviews";
 import CartHandler from "../../handlers/CartHandler/CartHandler";
 import { url } from "../../values/values";
 import { useEffect } from "react";
@@ -9,7 +10,6 @@ import {
   setBookDetail,
   setCommentations,
 } from "../../redux/reducers/BookDetail/BookDetailSlice";
-import Reviews from "../../component/Reviews/Reviews";
 
 function Detail() {
   const dispatch = useDispatch();

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useCallback } from "react";
 import { url } from "../../values/values";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook, setTotalData } from "../../redux/reducers/Books/booksSlice";
@@ -6,134 +7,208 @@ import {
   setBookAuthor,
   setBookAño,
   setBookGenero,
-  setBookFilters,
+  unSetBookFilters,
   setBookValue,
-  setBookOrganization,
   setBookPage,
 } from "../../redux/reducers/BookFilter/BookFilterSlice";
 
 export function FilterHandler() {
   const dispatch = useDispatch();
-  const { author, year, gender, value, organization, page, filters } =
-    useSelector((state) => state.bookFilter);
+  const { value, page, filters } = useSelector((state) => state.bookFilter);
+  const { books } = useSelector((state) => state.book);
 
-  const handleUnchecked = async () => {
-    const { data } = await axios.get(`${url}/book/`);
-    if (data) {
-      dispatch(setBook(data.results));
-    }
-  };
+  const handleUnchecked = useCallback(
+    async (e) => {
+      try {
+        if (e != "-price" && e != "price" && e != "title" && e != "-title") {
+          let newFilter;
+          if (filters.length === 3) {
+            newFilter = filters.filter((f) => f !== e);
+          } else if (filters.length === 2) {
+            newFilter = filters.filter((f) => f !== e);
+          } else if (filters.length === 1) {
+            newFilter = [];
+          }
 
-  const handlerCheckbox = async (e) => {
-    console.log("filters", filters);
-    if (filters.length === 0) {
-      const { data } = await axios.get(`${url}book/?search=${e}`);
-      if (data) {
-        dispatch(setBook(data.results));
-        // console.log("data.results", data.results);
+          const { data } = await axios.get(
+            `${url}book/?search=${newFilter.join("&search=")}`
+          );
+
+          dispatch(unSetBookFilters({ filters: newFilter }));
+          if (data) {
+            const totalPages = Math.ceil(data.count / 10);
+            dispatch(setTotalData(totalPages));
+            dispatch(setBook(data.results));
+            dispatch(setBookPage({ page: 1 }));
+          }
+        } else {
+          const { data } = await axios.get(`${url}book/?page_size=1`);
+          if (data) {
+            const totalPages = Math.ceil(data.count / 10);
+            dispatch(setTotalData(totalPages));
+            dispatch(setBook(data.results));
+            dispatch(setBookPage({ page: 1 }));
+          }
+        }
+      } catch (error) {
+        console.log("errorUncheck:", error.message);
       }
-    }
-    if (filters.length === 1) {
-      const { data } = await axios.get(
-        `${url}book/?search=${filters[0]}&search=${e}`
-      );
-      if (data) {
-        dispatch(setBook(data.results));
-      }
-    }
-    if (filters.length === 2) {
-      const { data } = await axios.get(
-        `${url}book/?search=${filters[0]}&search=${filters[1]}&search=${e}`
-      );
-      if (data) {
-        dispatch(setBook(data.results));
-      }
-    }
-  };
+    },
+    [dispatch, filters]
+  );
 
-  const handlerSortChange = (e) => {
-    if (e.target.value === "Titilo A-Z") {
-      dispatch(setBookValue({ value: "title" }));
-      dispatch(setBookOrganization({ organization: "ASC" }));
-      dispatch(setBookPage({ page: 1 }));
-    }
-    if (e.target.value === "Titilo Z-A") {
-      dispatch(setBookValue({ value: "title" }));
-      dispatch(setBookOrganization({ organization: "DESC" }));
-      dispatch(setBookPage({ page: 1 }));
-    }
-    if (e.target.value === "Precio menor") {
-      dispatch(setBookValue({ value: "price" }));
-      dispatch(setBookOrganization({ organization: "ASC" }));
-      dispatch(setBookPage({ page: 1 }));
-    }
-    if (e.target.value === "Precio mayor") {
-      dispatch(setBookValue({ value: "price" }));
-      dispatch(setBookOrganization({ organization: "DESC" }));
-      dispatch(setBookPage({ page: 1 }));
-    }
-  };
+  const handlerCheckbox = useCallback(
+    async (e, isOrder = false) => {
+      try {
+        if (e != "-price" && e != "price" && e != "title" && e != "-title") {
+          const { data } = await axios.get(
+            `${url}book/?search=${filters.join("&search=")}&search=${e}`
+          );
+          if (data) {
+            dispatch(setBook(data.results));
+            const totalPages = Math.ceil(data.count / 10);
+            dispatch(setTotalData(totalPages));
+          }
+        } else if (filters.length === 0) {
+          const { data } = await axios.get(
+            `${url}book/?ordering=${e}&page_size=1`
+          );
+          if (data) {
+            dispatch(setBook(data.results));
+            const totalPages = Math.ceil(data.count / 10);
+            dispatch(setTotalData(totalPages));
+          }
+        } else if (filters.length != 0) {
+          if (filters.length === 3) {
+            const { data } = await axios.get(
+              `${url}book/?ordering=${e}&page_size=1&search=${filters[0]}&search=${filters[1]}&search=${filters[2]}`
+            );
+            if (data) {
+              dispatch(setBook(data.results));
+              const totalPages = Math.ceil(data.count / 10);
+              dispatch(setTotalData(totalPages));
+            }
+          } else if (filters.length === 2) {
+            const { data } = await axios.get(
+              `${url}book/?ordering=${e}&page_size=1&search=${filters[0]}&search=${filters[1]}`
+            );
+            if (data) {
+              dispatch(setBook(data.results));
+              const totalPages = Math.ceil(data.count / 10);
+              dispatch(setTotalData(totalPages));
+            }
+          } else if (filters.length === 1) {
+            const { data } = await axios.get(
+              `${url}book/?ordering=${e}&page_size=1&search=${filters[0]}`
+            );
+            if (data) {
+              dispatch(setBook(data.results));
+              const totalPages = Math.ceil(data.count / 10);
+              dispatch(setTotalData(totalPages));
+              console.log("data", data);
+            }
+          }
+        }
+      } catch (error) {
+        console.log("errorCheck", error.message);
+      }
+    },
+    [dispatch, filters, value]
+  );
 
-  const handlerSort = async (event) => {
-    if (event) {
-      event.preventDefault();
-    }
+  const checkWithPage = async () => {
     try {
-      const { data } = await axios(
-        `https://e-commerce-pf-henry.onrender.com/book/booksort?value=${value}&organization=${organization}&page=${page}`
-      );
-      if (data) {
-        const totalPages = Math.ceil(data.count / 4);
-        dispatch(setBook(data.rows));
-        dispatch(setTotalData(totalPages));
+      if (filters.length === 3) {
+        const { data } = await axios.get(
+          `${url}book/?search=${filters[0]}&search=${filters[1]}&search=${filters[2]}&page_size=${page}`
+        );
+        if (data) {
+          dispatch(setBook(data.results));
+          const totalPages = Math.ceil(data.count / 10);
+          dispatch(setTotalData(totalPages));
+        }
+      }
+      if (filters.length === 2) {
+        const { data } = await axios.get(
+          `${url}book/?search=${filters[0]}&search=${filters[1]}&page_size=${page}`
+        );
+        if (data) {
+          dispatch(setBook(data.results));
+          const totalPages = Math.ceil(data.count / 10);
+          dispatch(setTotalData(totalPages));
+        }
+      }
+      if (filters.length === 1) {
+        const { data } = await axios.get(
+          `${url}book/?search=${filters[0]}&page_size=${page}`
+        );
+        if (data) {
+          dispatch(setBook(data.results));
+          const totalPages = Math.ceil(data.count / 10);
+          dispatch(setTotalData(totalPages));
+        }
+      }
+      if (value && filters.length === 0) {
+        const { data } = await axios.get(
+          `${url}book/?ordering=${value}&page_size=${page}`
+        );
+        if (data) {
+          dispatch(setBook(data.results));
+          const totalPages = Math.ceil(data.count / 10);
+          dispatch(setTotalData(totalPages));
+        }
       }
     } catch (error) {
-      console.log("errorAxios", error.message);
+      console.log("errorCheckPage", error.message);
     }
   };
 
-  // const handlerFilter = async () => {
-  //   try {
-  //     const { data } = await axios(
-  //       `https://e-commerce-pf-henry.onrender.com/book/filter?author=${author}&year=${year}&gender=${gender}&page=${page}`
-  //     );
-  //     if (data) {
-  //       const totalPages = Math.ceil(data.count / 4);
-  //       dispatch(setTotalData(totalPages));
-  //       dispatch(setBook(data.filteredBooks));
-  //     }
-  //   } catch (error) {
-  //     console.log("errorAxios", error.message);
-  //   }
-  // };
-
   const handlerClearFilters = async () => {
+    dispatch(unSetBookFilters({ filters: [] }));
     dispatch(setBookAuthor({ author: "" }));
     dispatch(setBookAño({ year: "" }));
     dispatch(setBookGenero({ gender: "" }));
     dispatch(setBookValue({ value: "" }));
-    dispatch(setBookOrganization({ organization: "" }));
     dispatch(setBookPage({ page: 1 }));
     try {
-      const { data } = await axios(
-        `https://e-commerce-pf-henry.onrender.com/book?page=${page}`
-      );
+      const { data } = await axios.get(`${url}book/`);
       if (data) {
-        const totalPages = Math.ceil(data.count / 4);
+        const totalPages = Math.ceil(data.count / 10);
         dispatch(setTotalData(totalPages));
-        dispatch(setBook(data.rows));
+        dispatch(setBook(data.results));
       }
     } catch (error) {
-      console.log("errorAxios", error.message);
+      console.log("errorClearCheck", error.message);
     }
   };
 
+  const orderWhithFilter = (e) => {
+    const newData = [...books];
+    if (e === "-price") {
+      newData.sort((a, b) => {
+        return a.price - b.price;
+      });
+    } else if (e === "price") {
+      newData.sort((a, b) => {
+        return b.price - a.price;
+      });
+    } else if (e === "title") {
+      newData.sort((a, b) => {
+        return a.title.localeCompare(b.title);
+      });
+    } else if (e === "-title") {
+      newData.sort((a, b) => {
+        return b.title.localeCompare(a.title);
+      });
+    }
+    dispatch(setBook(newData));
+  };
+
   return {
-    // handlerFilter,
     handleUnchecked,
     handlerCheckbox,
-    handlerSortChange,
-    handlerSort,
+    checkWithPage,
     handlerClearFilters,
+    orderWhithFilter,
   };
 }
