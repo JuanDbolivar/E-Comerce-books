@@ -24,7 +24,6 @@ function FormSelect() {
     handlerCheckbox,
     checkWithPage,
     handlerClearFilters,
-    orderWhithFilter,
   } = FilterHandler();
 
   useEffect(() => {
@@ -187,7 +186,7 @@ function FormSelect() {
                   checked={value}
                   onChange={() => {
                     dispatch(setBookValue({ value: "" }));
-                    handleUnchecked(value);
+                    handleUnchecked(value, true);
                   }}
                 />
                 {value === "-price" && "Mayor precio"}

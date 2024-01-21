@@ -15,10 +15,9 @@ import {
 export function FilterHandler() {
   const dispatch = useDispatch();
   const { value, page, filters } = useSelector((state) => state.bookFilter);
-  const { books } = useSelector((state) => state.book);
 
   const handleUnchecked = useCallback(
-    async (e) => {
+    async (e, isOrder = false) => {
       try {
         if (e != "-price" && e != "price" && e != "title" && e != "-title") {
           let newFilter;
@@ -41,6 +40,36 @@ export function FilterHandler() {
             dispatch(setBook(data.results));
             dispatch(setBookPage({ page: 1 }));
           }
+        } else if (filters.length != 0 && isOrder) {
+          if (filters.length === 3) {
+            const { data } = await axios.get(
+              `${url}book/?page_size=1&search=${filters[0]}&search=${filters[1]}&search=${filters[2]}`
+            );
+            if (data) {
+              dispatch(setBook(data.results));
+              const totalPages = Math.ceil(data.count / 10);
+              dispatch(setTotalData(totalPages));
+            }
+          } else if (filters.length === 2) {
+            const { data } = await axios.get(
+              `${url}book/?page_size=1&search=${filters[0]}&search=${filters[1]}`
+            );
+            if (data) {
+              dispatch(setBook(data.results));
+              const totalPages = Math.ceil(data.count / 10);
+              dispatch(setTotalData(totalPages));
+            }
+          } else if (filters.length === 1) {
+            const { data } = await axios.get(
+              `${url}book/?page_size=1&search=${filters[0]}`
+            );
+            if (data) {
+              dispatch(setBook(data.results));
+              const totalPages = Math.ceil(data.count / 10);
+              dispatch(setTotalData(totalPages));
+              console.log("data", data);
+            }
+          }
         } else {
           const { data } = await axios.get(`${url}book/?page_size=1`);
           if (data) {
@@ -58,7 +87,7 @@ export function FilterHandler() {
   );
 
   const handlerCheckbox = useCallback(
-    async (e, isOrder = false) => {
+    async (e) => {
       try {
         if (e != "-price" && e != "price" && e != "title" && e != "-title") {
           const { data } = await axios.get(
@@ -105,7 +134,6 @@ export function FilterHandler() {
               dispatch(setBook(data.results));
               const totalPages = Math.ceil(data.count / 10);
               dispatch(setTotalData(totalPages));
-              console.log("data", data);
             }
           }
         }
@@ -158,6 +186,37 @@ export function FilterHandler() {
           dispatch(setTotalData(totalPages));
         }
       }
+      if (value && filters.length != 0) {
+        if (filters.length === 3) {
+          const { data } = await axios.get(
+            `${url}book/?ordering=${value}&page_size=${page}&search=${filters[0]}&search=${filters[1]}&search=${filters[2]}`
+          );
+          if (data) {
+            dispatch(setBook(data.results));
+            const totalPages = Math.ceil(data.count / 10);
+            dispatch(setTotalData(totalPages));
+          }
+        } else if (filters.length === 2) {
+          const { data } = await axios.get(
+            `${url}book/?ordering=${value}&page_size=${page}&search=${filters[0]}&search=${filters[1]}`
+          );
+          if (data) {
+            dispatch(setBook(data.results));
+            const totalPages = Math.ceil(data.count / 10);
+            dispatch(setTotalData(totalPages));
+          }
+        } else if (filters.length === 1) {
+          const { data } = await axios.get(
+            `${url}book/?ordering=${value}&page_size=${page}&search=${filters[0]}`
+          );
+          if (data) {
+            dispatch(setBook(data.results));
+            const totalPages = Math.ceil(data.count / 10);
+            dispatch(setTotalData(totalPages));
+            console.log("data", data);
+          }
+        }
+      }
     } catch (error) {
       console.log("errorCheckPage", error.message);
     }
@@ -182,33 +241,10 @@ export function FilterHandler() {
     }
   };
 
-  const orderWhithFilter = (e) => {
-    const newData = [...books];
-    if (e === "-price") {
-      newData.sort((a, b) => {
-        return a.price - b.price;
-      });
-    } else if (e === "price") {
-      newData.sort((a, b) => {
-        return b.price - a.price;
-      });
-    } else if (e === "title") {
-      newData.sort((a, b) => {
-        return a.title.localeCompare(b.title);
-      });
-    } else if (e === "-title") {
-      newData.sort((a, b) => {
-        return b.title.localeCompare(a.title);
-      });
-    }
-    dispatch(setBook(newData));
-  };
-
   return {
     handleUnchecked,
     handlerCheckbox,
     checkWithPage,
     handlerClearFilters,
-    orderWhithFilter,
   };
 }

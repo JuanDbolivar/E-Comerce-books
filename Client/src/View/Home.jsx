@@ -61,7 +61,7 @@ function Home({ rerenderKey }) {
       </div>
       <div className="columns">
         <div className=" column is-one-fifth">
-          <FormSelect />
+          <FormSelect />';/'
         </div>
 
         <div className="column">
