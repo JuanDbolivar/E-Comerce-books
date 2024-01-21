@@ -16,6 +16,17 @@ export function FilterHandler() {
   const dispatch = useDispatch();
   const { value, page, filters } = useSelector((state) => state.bookFilter);
 
+  const fetchData = async (urlApi) => {
+    const { data } = await axios.get(`${urlApi}`);
+
+    if (data) {
+      const totalPages = Math.ceil(data.count / 10);
+      dispatch(setTotalData(totalPages));
+      dispatch(setBook(data.results));
+      dispatch(setBookPage({ page: 1 }));
+    }
+  };
+
   const handleUnchecked = useCallback(
     async (e, isOrder = false) => {
       try {
@@ -28,56 +39,23 @@ export function FilterHandler() {
           } else if (filters.length === 1) {
             newFilter = [];
           }
-
-          const { data } = await axios.get(
-            `${url}book/?search=${newFilter.join("&search=")}`
-          );
-
+          const urlApi = `${url}book/?search=${newFilter.join("&search=")}`;
           dispatch(unSetBookFilters({ filters: newFilter }));
-          if (data) {
-            const totalPages = Math.ceil(data.count / 10);
-            dispatch(setTotalData(totalPages));
-            dispatch(setBook(data.results));
-            dispatch(setBookPage({ page: 1 }));
-          }
+          fetchData(urlApi);
         } else if (filters.length != 0 && isOrder) {
           if (filters.length === 3) {
-            const { data } = await axios.get(
-              `${url}book/?page_size=1&search=${filters[0]}&search=${filters[1]}&search=${filters[2]}`
-            );
-            if (data) {
-              dispatch(setBook(data.results));
-              const totalPages = Math.ceil(data.count / 10);
-              dispatch(setTotalData(totalPages));
-            }
+            const urlApi = `${url}book/?page_size=1&search=${filters[0]}&search=${filters[1]}&search=${filters[2]}`;
+            fetchData(urlApi);
           } else if (filters.length === 2) {
-            const { data } = await axios.get(
-              `${url}book/?page_size=1&search=${filters[0]}&search=${filters[1]}`
-            );
-            if (data) {
-              dispatch(setBook(data.results));
-              const totalPages = Math.ceil(data.count / 10);
-              dispatch(setTotalData(totalPages));
-            }
+            const urlApi = `${url}book/?page_size=1&search=${filters[0]}&search=${filters[1]}`;
+            fetchData(urlApi);
           } else if (filters.length === 1) {
-            const { data } = await axios.get(
-              `${url}book/?page_size=1&search=${filters[0]}`
-            );
-            if (data) {
-              dispatch(setBook(data.results));
-              const totalPages = Math.ceil(data.count / 10);
-              dispatch(setTotalData(totalPages));
-              console.log("data", data);
-            }
+            const urlApi = `${url}book/?page_size=1&search=${filters[0]}`;
+            fetchData(urlApi);
           }
         } else {
-          const { data } = await axios.get(`${url}book/?page_size=1`);
-          if (data) {
-            const totalPages = Math.ceil(data.count / 10);
-            dispatch(setTotalData(totalPages));
-            dispatch(setBook(data.results));
-            dispatch(setBookPage({ page: 1 }));
-          }
+          const urlApi = `${url}book/?page_size=1`;
+          fetchData(urlApi);
         }
       } catch (error) {
         console.log("errorUncheck:", error.message);
@@ -90,51 +68,23 @@ export function FilterHandler() {
     async (e) => {
       try {
         if (e != "-price" && e != "price" && e != "title" && e != "-title") {
-          const { data } = await axios.get(
-            `${url}book/?search=${filters.join("&search=")}&search=${e}`
-          );
-          if (data) {
-            dispatch(setBook(data.results));
-            const totalPages = Math.ceil(data.count / 10);
-            dispatch(setTotalData(totalPages));
-          }
+          const urlApi = `${url}book/?search=${filters.join(
+            "&search="
+          )}&search=${e}`;
+          fetchData(urlApi);
         } else if (filters.length === 0) {
-          const { data } = await axios.get(
-            `${url}book/?ordering=${e}&page_size=1`
-          );
-          if (data) {
-            dispatch(setBook(data.results));
-            const totalPages = Math.ceil(data.count / 10);
-            dispatch(setTotalData(totalPages));
-          }
+          const urlApi = `${url}book/?ordering=${e}&page_size=1`;
+          fetchData(urlApi);
         } else if (filters.length != 0) {
           if (filters.length === 3) {
-            const { data } = await axios.get(
-              `${url}book/?ordering=${e}&page_size=1&search=${filters[0]}&search=${filters[1]}&search=${filters[2]}`
-            );
-            if (data) {
-              dispatch(setBook(data.results));
-              const totalPages = Math.ceil(data.count / 10);
-              dispatch(setTotalData(totalPages));
-            }
+            const urlApi = `${url}book/?ordering=${e}&page_size=1&search=${filters[0]}&search=${filters[1]}&search=${filters[2]}`;
+            fetchData(urlApi);
           } else if (filters.length === 2) {
-            const { data } = await axios.get(
-              `${url}book/?ordering=${e}&page_size=1&search=${filters[0]}&search=${filters[1]}`
-            );
-            if (data) {
-              dispatch(setBook(data.results));
-              const totalPages = Math.ceil(data.count / 10);
-              dispatch(setTotalData(totalPages));
-            }
+            const urlApi = `${url}book/?ordering=${e}&page_size=1&search=${filters[0]}&search=${filters[1]}`;
+            fetchData(urlApi);
           } else if (filters.length === 1) {
-            const { data } = await axios.get(
-              `${url}book/?ordering=${e}&page_size=1&search=${filters[0]}`
-            );
-            if (data) {
-              dispatch(setBook(data.results));
-              const totalPages = Math.ceil(data.count / 10);
-              dispatch(setTotalData(totalPages));
-            }
+            const urlApi = `${url}book/?ordering=${e}&page_size=1&search=${filters[0]}`;
+            fetchData(urlApi);
           }
         }
       } catch (error) {
@@ -147,74 +97,31 @@ export function FilterHandler() {
   const checkWithPage = async () => {
     try {
       if (filters.length === 3) {
-        const { data } = await axios.get(
-          `${url}book/?search=${filters[0]}&search=${filters[1]}&search=${filters[2]}&page_size=${page}`
-        );
-        if (data) {
-          dispatch(setBook(data.results));
-          const totalPages = Math.ceil(data.count / 10);
-          dispatch(setTotalData(totalPages));
-        }
+        const urlApi = `${url}book/?search=${filters[0]}&search=${filters[1]}&search=${filters[2]}&page_size=${page}`;
+        fetchData(urlApi);
       }
       if (filters.length === 2) {
-        const { data } = await axios.get(
-          `${url}book/?search=${filters[0]}&search=${filters[1]}&page_size=${page}`
-        );
-        if (data) {
-          dispatch(setBook(data.results));
-          const totalPages = Math.ceil(data.count / 10);
-          dispatch(setTotalData(totalPages));
-        }
+        const urlApi = `${url}book/?search=${filters[0]}&search=${filters[1]}&page_size=${page}`;
+        fetchData(urlApi);
       }
       if (filters.length === 1) {
-        const { data } = await axios.get(
-          `${url}book/?search=${filters[0]}&page_size=${page}`
-        );
-        if (data) {
-          dispatch(setBook(data.results));
-          const totalPages = Math.ceil(data.count / 10);
-          dispatch(setTotalData(totalPages));
-        }
+        const urlApi = `${url}book/?search=${filters[0]}&page_size=${page}`;
+        fetchData(urlApi);
       }
       if (value && filters.length === 0) {
-        const { data } = await axios.get(
-          `${url}book/?ordering=${value}&page_size=${page}`
-        );
-        if (data) {
-          dispatch(setBook(data.results));
-          const totalPages = Math.ceil(data.count / 10);
-          dispatch(setTotalData(totalPages));
-        }
+        const urlApi = `${url}book/?ordering=${value}&page_size=${page}`;
+        fetchData(urlApi);
       }
       if (value && filters.length != 0) {
         if (filters.length === 3) {
-          const { data } = await axios.get(
-            `${url}book/?ordering=${value}&page_size=${page}&search=${filters[0]}&search=${filters[1]}&search=${filters[2]}`
-          );
-          if (data) {
-            dispatch(setBook(data.results));
-            const totalPages = Math.ceil(data.count / 10);
-            dispatch(setTotalData(totalPages));
-          }
+          const urlApi = `${url}book/?ordering=${value}&page_size=${page}&search=${filters[0]}&search=${filters[1]}&search=${filters[2]}`;
+          fetchData(urlApi);
         } else if (filters.length === 2) {
-          const { data } = await axios.get(
-            `${url}book/?ordering=${value}&page_size=${page}&search=${filters[0]}&search=${filters[1]}`
-          );
-          if (data) {
-            dispatch(setBook(data.results));
-            const totalPages = Math.ceil(data.count / 10);
-            dispatch(setTotalData(totalPages));
-          }
+          const urlApi = `${url}book/?ordering=${value}&page_size=${page}&search=${filters[0]}&search=${filters[1]}`;
+          fetchData(urlApi);
         } else if (filters.length === 1) {
-          const { data } = await axios.get(
-            `${url}book/?ordering=${value}&page_size=${page}&search=${filters[0]}`
-          );
-          if (data) {
-            dispatch(setBook(data.results));
-            const totalPages = Math.ceil(data.count / 10);
-            dispatch(setTotalData(totalPages));
-            console.log("data", data);
-          }
+          const urlApi = `${url}book/?ordering=${value}&page_size=${page}&search=${filters[0]}`;
+          fetchData(urlApi);
         }
       }
     } catch (error) {
@@ -230,12 +137,8 @@ export function FilterHandler() {
     dispatch(setBookValue({ value: "" }));
     dispatch(setBookPage({ page: 1 }));
     try {
-      const { data } = await axios.get(`${url}book/`);
-      if (data) {
-        const totalPages = Math.ceil(data.count / 10);
-        dispatch(setTotalData(totalPages));
-        dispatch(setBook(data.results));
-      }
+      const urlApi = `${url}book/`;
+      fetchData(urlApi);
     } catch (error) {
       console.log("errorClearCheck", error.message);
     }
