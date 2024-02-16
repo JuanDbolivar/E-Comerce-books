@@ -2,7 +2,6 @@ import "./App.css";
 import "bulma/css/bulma.min.css";
 import Home from "./View/Home";
 import Success from "./component/Success/Success";
-import Cancel from "./component/Cancel/Cancel";
 import Cart from "./component/Cart/Cart";
 import Detail from "./View/Detail/Detail";
 import Footer from "./component/Footer/Footer";
@@ -37,7 +36,6 @@ function App() {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout/success" element={<Success />} />
-        <Route path="/checkout/cancel" element={<Cancel />} />
         <Route exact path="/banned" element={<Banned />} />
       </Routes>
       <Footer />

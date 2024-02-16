@@ -249,6 +249,7 @@ function FormSelect() {
         </div>
       ) : null}
       <button onClick={handlerClearFilters}>Borrar filtros</button>
+      <hr />
     </div>
   );
 }

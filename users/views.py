@@ -7,4 +7,4 @@ class UserViewset(viewsets.ModelViewSet):
     queryset = Users.objects.all()
     serializer_class = UsersSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name', 'banned', 'id_books']
+    search_fields = ['id', 'banned', 'id_books']

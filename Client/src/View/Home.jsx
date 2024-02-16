@@ -15,9 +15,8 @@ import {
 } from "../redux/reducers/Books/booksSlice";
 
 function Home({ rerenderKey }) {
-  const { author, year, gender, value, organization, page } = useSelector(
-    (state) => state.bookFilter
-  );
+  const { author, year, gender, value, organization, page, filters } =
+    useSelector((state) => state.bookFilter);
   const { totalData, books } = useSelector((state) => state.book);
 
   const dispatch = useDispatch();
@@ -42,7 +41,7 @@ function Home({ rerenderKey }) {
   }, [page]);
 
   useEffect(() => {
-    const cositas = async () => {
+    const list = async () => {
       const { data } = await axios(`${url}list-author-year-gender/list/`);
       if (data) {
         dispatch(setDataA(data.authors));
@@ -50,7 +49,7 @@ function Home({ rerenderKey }) {
         dispatch(setDataG(data.genders));
       }
     };
-    cositas();
+    list();
   }, []);
 
   return (
@@ -61,7 +60,7 @@ function Home({ rerenderKey }) {
       </div>
       <div className="columns">
         <div className=" column is-one-fifth">
-          <FormSelect />';/'
+          <FormSelect />
         </div>
 
         <div className="column">
@@ -70,7 +69,13 @@ function Home({ rerenderKey }) {
               <h3>Lo sentimos, al momento no contamos con ese libro</h3>
               <h1>🥲</h1>
             </div>
-          ) : books.length === 0 && (author || year || gender) ? (
+          ) : filters.length > 1 &&
+            books.every(
+              (book) =>
+                book.author !== author ||
+                book.year !== year ||
+                book.gender !== gender
+            ) ? (
             <div className="content">
               <h3>
                 Lo sentimos, al momento no contamos con libros que tengan esas

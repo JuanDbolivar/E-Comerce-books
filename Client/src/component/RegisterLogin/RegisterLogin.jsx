@@ -17,11 +17,6 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 
-//https://e-commerce-pf-henry.onrender.com/user?page=1  ==>GET para admins
-//https://e-commerce-pf-henry.onrender.com/user/update?userId=ID DEL USUARIO A MODIFICAR ==>modificar usuarios
-//https://e-commerce-pf-henry.onrender.com/comment?bookId=ID DEL LIBRO&userId=ID DEL USUARIO QUE COMENTA  ==>post de comentarios
-//https://e-commerce-pf-henry.onrender.com/book/update/:id ID DEL USUARIO A MODIFICAR (el id llega por params) ==>modificar libros
-
 function RegisterLogin() {
   const dispatch = useDispatch();
   const { name } = useSelector((state) => state.user);
@@ -51,25 +46,21 @@ function RegisterLogin() {
         const name = credentials.user.displayName;
         const email = credentials.user.email;
         try {
-          const { data } = await axios.post(
-            `https://e-commerce-pf-henry.onrender.com/user`,
-            {
-              id,
-              name,
-              email,
-            }
-          );
+          const { data } = await axios.post(`http://localhost:8000/user/`, {
+            id,
+            name,
+            email,
+          });
           if (data) {
-            const admin = data.admin;
             const banned = data.banned;
             const idBooks = data.idBooks;
-            dispatch(setUser({ id, name, email, admin, banned }));
+            dispatch(setUser({ id, name, email, banned }));
             if (idBooks) {
               dispatch(setIdBooks({ idBooks }));
             }
           }
         } catch (error) {
-          console.log("errorAxios", error.message);
+          console.log("errorAxiosPost", error.message);
         }
         if (name) {
           setEmailRegistrer("");
@@ -78,7 +69,7 @@ function RegisterLogin() {
         }
       }
     } catch (error) {
-      console.log("error.message", error.message);
+      console.log("errorMessageRegister", error.message);
     }
   };
 
@@ -96,19 +87,18 @@ function RegisterLogin() {
         if (id) {
           try {
             const { data } = await axios(
-              `https://e-commerce-pf-henry.onrender.com/user/client?id=${id}`
+              `http://localhost:8000/user/?search=${id}`
             );
             if (data) {
-              const admin = data.admin;
               const banned = data.banned;
               const idBooks = data.idBooks;
-              dispatch(setUser({ id, name, email, admin, banned }));
+              dispatch(setUser({ id, name, email, banned }));
               if (idBooks) {
                 dispatch(setIdBooks({ idBooks }));
               }
             }
           } catch (error) {
-            console.log("errorAxios", error.message);
+            console.log("errorAxiosGet", error.message);
           }
         }
         if (name) {
@@ -117,7 +107,7 @@ function RegisterLogin() {
         }
       }
     } catch (error) {
-      console.log("error.message", error.message);
+      console.log("errorMessageSignIn", error.message);
     }
   };
 
@@ -131,20 +121,20 @@ function RegisterLogin() {
         if (id) {
           try {
             const { data } = await axios(
-              `https://e-commerce-pf-henry.onrender.com/user/client?id=${id}`
+              `http://localhost:8000/user/?search=${id}`
             );
             if (data) {
-              const admin = data.admin;
+              console.log('data', data)
               const banned = data.banned;
               const idBooks = data.idBooks;
-              dispatch(setUser({ id, name, email, admin, banned }));
+              dispatch(setUser({ id, name, email, banned }));
               if (idBooks) {
                 dispatch(setIdBooks({ idBooks }));
               }
             } else {
               try {
                 const { data } = await axios.post(
-                  `https://e-commerce-pf-henry.onrender.com/user`,
+                  `http://localhost:8000/user/`,
                   {
                     id,
                     name,
@@ -152,34 +142,35 @@ function RegisterLogin() {
                   }
                 );
                 if (data) {
+                  console.log('data2', data)
                   try {
                     const { data } = await axios(
-                      `https://e-commerce-pf-henry.onrender.com/user/client?id=${id}`
+                      `http://localhost:8000/user/?search=${id}`
                     );
                     if (data) {
-                      const admin = data.admin;
+                      console.log('data3', data)
                       const banned = data.banned;
                       const idBooks = data.idBooks;
-                      dispatch(setUser({ id, name, email, admin, banned }));
+                      dispatch(setUser({ id, name, email, banned }));
                       if (idBooks) {
                         dispatch(setIdBooks({ idBooks }));
                       }
                     }
                   } catch (error) {
-                    console.log("errorAxios", error.message);
+                    console.log("errorAxiosLastRequest", error.message);
                   }
                 }
               } catch (error) {
-                console.log("errorAxios", error.message);
+                console.log("errorAxiosPostGoogle", error.message);
               }
             }
           } catch (error) {
-            console.log("errorAxios: ", error.message);
+            console.log("errorAxiosGetGoogle ", error.message);
           }
         }
       }
     } catch (error) {
-      console.log("error.message", error.message);
+      console.log("errorMessageGoogle", error.message);
     }
   };
 
