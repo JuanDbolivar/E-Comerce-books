@@ -123,8 +123,8 @@ function RegisterLogin() {
             const { data } = await axios(
               `http://localhost:8000/user/?search=${id}`
             );
-            if (data) {
-              console.log('data', data)
+            if (data.length !== 0) {
+              console.log("data", data);
               const banned = data.banned;
               const idBooks = data.idBooks;
               dispatch(setUser({ id, name, email, banned }));
@@ -142,13 +142,13 @@ function RegisterLogin() {
                   }
                 );
                 if (data) {
-                  console.log('data2', data)
+                  console.log("data2", data);
                   try {
                     const { data } = await axios(
                       `http://localhost:8000/user/?search=${id}`
                     );
                     if (data) {
-                      console.log('data3', data)
+                      console.log("data3", data);
                       const banned = data.banned;
                       const idBooks = data.idBooks;
                       dispatch(setUser({ id, name, email, banned }));
