@@ -24,4 +24,5 @@ urlpatterns = [
     path('book/', include('books.urls')),
     path('send-mail/', include('mail.urls')),
     path('list-author-year-gender/', include('extract_fields.urls')),
-]
+    path('payments/', include('payments.urls'))
+    ]
