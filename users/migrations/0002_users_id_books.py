@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='users',
-            name='id_books',
+            name='purchased_books',
             field=models.IntegerField(null=True),
         ),
     ]

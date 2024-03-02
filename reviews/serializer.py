@@ -1,7 +1,6 @@
 # serializers.py (reviews)
 from rest_framework import serializers
 from .models import Reviews
-from users.serializer import UsersSerializer
 
 
 class ReviewsSerializer(serializers.ModelSerializer):

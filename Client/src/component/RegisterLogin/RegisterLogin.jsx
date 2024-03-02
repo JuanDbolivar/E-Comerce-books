@@ -53,10 +53,10 @@ function RegisterLogin() {
           });
           if (data) {
             const banned = data.banned;
-            const idBooks = data.idBooks;
+            const purchased_books = data.purchased_books;
             dispatch(setUser({ id, name, email, banned }));
-            if (idBooks) {
-              dispatch(setIdBooks({ idBooks }));
+            if (purchased_books) {
+              dispatch(setIdBooks({ purchased_books }));
             }
           }
         } catch (error) {
@@ -91,10 +91,10 @@ function RegisterLogin() {
             );
             if (data) {
               const banned = data.banned;
-              const idBooks = data.idBooks;
+              const purchased_books = data.purchased_books;
               dispatch(setUser({ id, name, email, banned }));
-              if (idBooks) {
-                dispatch(setIdBooks({ idBooks }));
+              if (purchased_books) {
+                dispatch(setIdBooks({ purchased_books }));
               }
             }
           } catch (error) {
@@ -126,10 +126,10 @@ function RegisterLogin() {
             if (data.length !== 0) {
               console.log("data", data);
               const banned = data.banned;
-              const idBooks = data.idBooks;
+              const purchased_books = data.purchased_books;
               dispatch(setUser({ id, name, email, banned }));
-              if (idBooks) {
-                dispatch(setIdBooks({ idBooks }));
+              if (purchased_books) {
+                dispatch(setIdBooks({ purchased_books }));
               }
             } else {
               try {
@@ -150,10 +150,10 @@ function RegisterLogin() {
                     if (data) {
                       console.log("data3", data);
                       const banned = data.banned;
-                      const idBooks = data.idBooks;
+                      const purchased_books = data.purchased_books;
                       dispatch(setUser({ id, name, email, banned }));
-                      if (idBooks) {
-                        dispatch(setIdBooks({ idBooks }));
+                      if (purchased_books) {
+                        dispatch(setIdBooks({ purchased_books }));
                       }
                     }
                   } catch (error) {

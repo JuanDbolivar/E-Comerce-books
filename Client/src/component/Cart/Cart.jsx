@@ -41,7 +41,7 @@ function Cart() {
   useEffect(() => {
     const booksId = userBooks.map((book) => book.id);
     if (booksId) {
-      dispatch(setIdBooks({ idBooks: booksId }));
+      dispatch(setIdBooks({ purchased_books: booksId}));
     }
   }, []);
 

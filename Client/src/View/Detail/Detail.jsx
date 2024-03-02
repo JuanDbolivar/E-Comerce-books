@@ -17,7 +17,7 @@ function Detail() {
   const { detail, commentations, enviado } = useSelector(
     (state) => state.bookDetail
   );
-  const { idBooks, email, userBooks } = useSelector((state) => state.user);
+  const { purchased_books, email, userBooks } = useSelector((state) => state.user);
 
   const { putOrRemoveBookToCart } = CartHandler();
 
@@ -96,7 +96,7 @@ function Detail() {
             </article>
           </div>
         ))}
-      {email && idBooks.includes(Number(id)) ? <Reviews /> : null}
+      {email && purchased_books.includes(Number(id)) ? <Reviews /> : null}
     </>
   );
 }

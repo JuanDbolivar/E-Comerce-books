@@ -13,7 +13,7 @@ import {
 
 function CartHandler() {
   const dispatch = useDispatch();
-  const { userBooks, id, email, idBooks } = useSelector((state) => state.user);
+  const { userBooks, id, email, purchased_books } = useSelector((state) => state.user);
   const {  userName, userEmail, booksName, userAddress } = useSelector(
     (state) => state.sendUser
   );
@@ -65,7 +65,7 @@ function CartHandler() {
       try {
         await axios.put(
           `https://e-commerce-pf-henry.onrender.com/user/update?userId=${id}`,
-          { idBooks }
+          { purchased_books }
         );
       } catch (error) {
         console.log("errorAxios", error.message);
