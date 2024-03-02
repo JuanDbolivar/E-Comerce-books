@@ -14,7 +14,7 @@ import {
 function CartHandler() {
   const dispatch = useDispatch();
   const { userBooks, id, email, idBooks } = useSelector((state) => state.user);
-  const { totalUSD, userName, userEmail, booksName, userAddress } = useSelector(
+  const {  userName, userEmail, booksName, userAddress } = useSelector(
     (state) => state.sendUser
   );
 
@@ -72,30 +72,6 @@ function CartHandler() {
       }
     }
     dispatch(unSetUserBooks());
-
-    try {
-      const Endpoint =
-        "https://e-commerce-pf-henry.onrender.com/checkout/session";
-
-      const amountInCents = Math.round(totalUSD * 100);
-      const data = {
-        productName: userBooks.map((book) => book.title).join(", "),
-        unitAmount: amountInCents,
-      };
-      const response = await axios.post(Endpoint, data);
-
-      if (response.data) {
-        // const { data } = await axios.post(
-        //   `https://e-commerce-pf-henry.onrender.com/send-email?userEmail=${userEmail}&totalUSD=${totalUSD}&booksName=${booksName}&userName=${userName}&userAddress=${userAddress}`
-        // );
-        // if (data) {
-        // }
-        dispatch(unSetSendUser());
-        window.location.href = response.data;
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return {

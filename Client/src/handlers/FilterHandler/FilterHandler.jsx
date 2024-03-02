@@ -23,7 +23,7 @@ export function FilterHandler() {
       const totalPages = Math.ceil(data.count / 10);
       dispatch(setTotalData(totalPages));
       dispatch(setBook(data.results));
-      dispatch(setBookPage({ page: 1 }));
+      // dispatch(setBookPage({ page: 1 }));
     }
   };
 
@@ -32,6 +32,7 @@ export function FilterHandler() {
       try {
         if (e != "-price" && e != "price" && e != "title" && e != "-title") {
           let newFilter;
+          dispatch(setBookPage({ page: 1 }));
           if (filters.length === 3) {
             newFilter = filters.filter((f) => f !== e);
           } else if (filters.length === 2) {
@@ -55,6 +56,7 @@ export function FilterHandler() {
           }
         } else {
           const urlApi = `${url}book/?page_size=1`;
+          // dispatch(setBookPage({ page: 1 }));
           fetchData(urlApi);
         }
       } catch (error) {
@@ -72,6 +74,7 @@ export function FilterHandler() {
             "&search="
           )}&search=${e}`;
           fetchData(urlApi);
+          // dispatch(setBookPage({ page: 1 }));
         } else if (filters.length === 0) {
           const urlApi = `${url}book/?ordering=${e}&page_size=1`;
           fetchData(urlApi);

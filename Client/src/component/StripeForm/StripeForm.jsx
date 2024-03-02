@@ -1,8 +1,11 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 function StripeForm() {
+  const { totalUSD } = useSelector((state) => state.sendUser);
+
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const stripe = useStripe();
@@ -31,7 +34,7 @@ function StripeForm() {
           {
             payment_method_id: id,
             email,
-            amount: 100,
+            amount: Math.round(totalUSD * 100),
           }
         );
         console.log("data", data);

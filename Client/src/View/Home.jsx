@@ -70,11 +70,10 @@ function Home({ rerenderKey }) {
               <h1>🥲</h1>
             </div>
           ) : filters.length > 1 &&
-            books.every(
-              (book) =>
-                book.author !== author ||
-                book.year !== year ||
-                book.gender !== gender
+            !filters.every((filter) =>
+              Object.values(books[0]).some(
+                (value) => value.toString() === filter
+              )
             ) ? (
             <div className="content">
               <h3>
