@@ -4,8 +4,8 @@ from books.serializer import BooksSerializer
 
 
 class UsersSerializer(serializers.ModelSerializer):
-    books = BooksSerializer(many=True, read_only=True)
+    purchased_books = BooksSerializer(many=True, read_only=True)
 
     class Meta:
         model = Users
-        fields = ['id', 'name', "email", "purchased_books"]
+        fields = ['id', 'name', "email", "purchased_books", "banned"]
