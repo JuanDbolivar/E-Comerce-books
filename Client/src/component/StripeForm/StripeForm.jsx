@@ -1,5 +1,6 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
@@ -10,6 +11,7 @@ function StripeForm() {
   const [email, setEmail] = useState("");
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     if (event.error) {
@@ -37,7 +39,11 @@ function StripeForm() {
             amount: Math.round(totalUSD * 100),
           }
         );
-        console.log("data", data);
+
+        if (data.message == "Succes") {
+          navigate("/checkout/success");
+          setEmail("");
+        }
         elements.getElement(CardElement).clear();
       } else throw error;
     } catch (error) {
@@ -46,28 +52,63 @@ function StripeForm() {
   };
 
   return (
-    <form action="payments" onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="email">Email Address</label>
-        <input
-          type="email"
-          id="email"
-          name="name"
-          placeholder="youremail@email.com"
-          required
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-        />
+    <div className="columns">
+      <div className="column is-two-fifths">
+        <form action="payments" onSubmit={handleSubmit}>
+          <div className="field">
+            <label htmlFor="email" className="label">
+              Email Address
+            </label>
+            <div className="control">
+              <input
+                className="input"
+                type="email"
+                id="email"
+                name="name"
+                placeholder="youremail@email.com"
+                required
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label htmlFor="card-element" className="label">
+              Credit or debit card
+            </label>
+            <div className="field">
+              <CardElement id="card-element" onChange={handleChange} />
+            </div>
+            <hr />
+            <div role="alert">{error}</div>
+          </div>
+          <div className="field is-grouped">
+            <div className="control">
+              <button type="submit" className="button is-link">
+                Comprar
+              </button>
+            </div>
+            <div className="control">
+              <button
+                className="button is-link is-light"
+                onClick={() => {
+                  navigate("/cart");
+                }}
+              >
+                Atras
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div>
-        <label htmlFor="card-element">Credit or debit card</label>
-        <CardElement id="card-element" onChange={handleChange} />
-        <div role="alert">{error}</div>
+      <div className="column">
+        <p>
+          aca va la info del producto o productos a <strong>comprar</strong>
+        </p>
       </div>
-      <button type="submit">Comprar</button>
-    </form>
+    </div>
   );
 }
 

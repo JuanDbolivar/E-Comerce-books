@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setIdBooks } from "../../redux/reducers/Users/UserSlice";
 import { setTotalUSD } from "../../redux/reducers/SendUser/sendUserSlice";
+import axios from "axios";
 
 function Cart() {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ function Cart() {
   useEffect(() => {
     const booksId = userBooks.map((book) => book.id);
     if (booksId) {
-      dispatch(setIdBooks({ purchased_books: booksId}));
+      dispatch(setIdBooks({ purchased_books: booksId }));
     }
   }, []);
 
@@ -101,7 +102,7 @@ function Cart() {
               Cantidad total: {totalBooks}
             </span>
             <span className="tag is-success is-large">
-              Total US$: {totalUSD}
+              Total USD$: {totalUSD}
             </span>
           </div>
           <br />

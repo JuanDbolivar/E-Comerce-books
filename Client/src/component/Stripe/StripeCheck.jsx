@@ -7,9 +7,11 @@ const stripePromise = loadStripe(
 
 function StripeCheck() {
   return (
-    // <div>hola</div>
     <Elements stripe={stripePromise}>
-      <StripeForm />
+      <div className="box">
+
+          <StripeForm />
+      </div>
     </Elements>
   );
 }

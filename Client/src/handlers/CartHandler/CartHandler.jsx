@@ -13,8 +13,10 @@ import {
 
 function CartHandler() {
   const dispatch = useDispatch();
-  const { userBooks, id, email, purchased_books } = useSelector((state) => state.user);
-  const {  userName, userEmail, booksName, userAddress } = useSelector(
+  const { userBooks, id, email, purchased_books } = useSelector(
+    (state) => state.user
+  );
+  const { userName, userEmail, booksName, userAddress } = useSelector(
     (state) => state.sendUser
   );
 
@@ -44,7 +46,7 @@ function CartHandler() {
   };
 
   const clearBookCart = () => {
-    dispatch(unSetUserBooks());
+    dispatch(unSetUserBooks()); //clear the cart
   };
 
   const buyBooks = async () => {};
@@ -63,15 +65,14 @@ function CartHandler() {
     }
     if (id && email) {
       try {
-        await axios.put(
-          `https://e-commerce-pf-henry.onrender.com/user/update?userId=${id}`,
-          { purchased_books }
-        );
+        await axios.patch(`http://localhost:8000/user/${id}/`, {
+          purchased_books,
+        });
       } catch (error) {
         console.log("errorAxios", error.message);
       }
     }
-    dispatch(unSetUserBooks());
+    dispatch(unSetUserBooks());//clear the cart
   };
 
   return {
