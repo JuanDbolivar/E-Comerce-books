@@ -1,11 +1,9 @@
 import "./FormBuy.css";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import CartHandler from "../../handlers/CartHandler/CartHandler";
 
 function FormBuy() {
   const { checkBook } = CartHandler();
-  const navigate = useNavigate();
 
   const {
     register,
@@ -111,14 +109,7 @@ function FormBuy() {
             <span className="help is-danger">{errors.phone.message}</span>
           )}
 
-          <button
-            className="button is-primary"
-            onClick={() => {
-              navigate("/payment");
-            }}
-          >
-            Finalizar compra
-          </button>
+          <button className="button is-primary">Finalizar compra</button>
         </form>
       </div>
     </div>

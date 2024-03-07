@@ -1,6 +1,7 @@
 import "./RegisterLogin.css";
 import "bulma/css/bulma.css";
 import axios from "axios";
+import { url } from "../../values/values";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -46,7 +47,7 @@ function RegisterLogin() {
         const name = credentials.user.displayName;
         const email = credentials.user.email;
         try {
-          const { data } = await axios.post(`http://localhost:8000/user/`, {
+          const { data } = await axios.post(`${url}user/`, {
             id,
             name,
             email,
@@ -87,7 +88,7 @@ function RegisterLogin() {
         if (id) {
           try {
             const { data } = await axios(
-              `http://localhost:8000/user/?search=${id}`
+              `${url}user/?search=${id}`
             );
             if (data) {
               const banned = data.banned;
@@ -121,7 +122,7 @@ function RegisterLogin() {
         if (id) {
           try {
             const { data } = await axios(
-              `http://localhost:8000/user/?search=${id}`
+              `${url}user/?search=${id}`
             );
             if (data.length !== 0) {
               console.log("data", data);
@@ -134,7 +135,7 @@ function RegisterLogin() {
             } else {
               try {
                 const { data } = await axios.post(
-                  `http://localhost:8000/user/`,
+                  `${url}user/`,
                   {
                     id,
                     name,
@@ -145,7 +146,7 @@ function RegisterLogin() {
                   console.log("data2", data);
                   try {
                     const { data } = await axios(
-                      `http://localhost:8000/user/?search=${id}`
+                      `${url}user/?search=${id}`
                     );
                     if (data) {
                       console.log("data3", data);

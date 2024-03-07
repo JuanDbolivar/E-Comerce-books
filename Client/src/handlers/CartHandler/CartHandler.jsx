@@ -1,5 +1,7 @@
 import axios from "axios";
+import { url } from "../../values/values";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   setSendUser,
   unSetSendUser,
@@ -19,6 +21,8 @@ function CartHandler() {
   const { userName, userEmail, booksName, userAddress } = useSelector(
     (state) => state.sendUser
   );
+
+  const navigate = useNavigate();
 
   const books = useSelector((state) => state.book.books);
 
@@ -49,8 +53,6 @@ function CartHandler() {
     dispatch(unSetUserBooks()); //clear the cart
   };
 
-  const buyBooks = async () => {};
-
   const checkBook = async (userData) => {
     if (userData) {
       const userName = userData.name;
@@ -62,17 +64,18 @@ function CartHandler() {
       dispatch(
         setSendUser({ userName, userEmail, userAddress, booksName, userPhone })
       );
+      navigate("/payment");
     }
     if (id && email) {
       try {
-        await axios.patch(`http://localhost:8000/user/${id}/`, {
+        await axios.patch(`${url}user/${id}/`, {
           purchased_books,
         });
       } catch (error) {
         console.log("errorAxios", error.message);
       }
     }
-    dispatch(unSetUserBooks());//clear the cart
+    dispatch(unSetUserBooks()); //clear the cart
   };
 
   return {
@@ -80,7 +83,6 @@ function CartHandler() {
     clearBookCart,
     removeBookFromCart,
     addBookToCart,
-    buyBooks,
     checkBook,
   };
 }

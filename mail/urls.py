@@ -1,11 +1,6 @@
-from django.urls import path, include
-from rest_framework import routers
-from .views import MailViewSet
-
-
-router = routers.DefaultRouter()
-router.register(r'', MailViewSet, basename='send-email')
+from django.urls import path
+from .views import mail_to_send
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', mail_to_send, name='send-email'),
 ]

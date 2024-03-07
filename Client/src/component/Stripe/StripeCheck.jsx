@@ -9,8 +9,7 @@ function StripeCheck() {
   return (
     <Elements stripe={stripePromise}>
       <div className="box">
-
-          <StripeForm />
+        <StripeForm />
       </div>
     </Elements>
   );
