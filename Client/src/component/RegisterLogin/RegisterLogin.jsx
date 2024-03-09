@@ -192,7 +192,7 @@ function RegisterLogin() {
       ) : (
         <>
           <button
-            className="buttonIngresar"
+           className='button is-light'
             onClick={() => {
               setIsModal(!isModal);
             }}

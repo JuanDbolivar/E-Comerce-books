@@ -59,9 +59,11 @@ function Home({ rerenderKey }) {
         <Paginado />
       </div>
       <div className="columns">
+        {/* <aside> */}
         <div className=" column is-one-fifth">
           <FormSelect />
         </div>
+        {/* </aside> */}
 
         <div className="column">
           {books.length === 0 && totalData === 1 ? (

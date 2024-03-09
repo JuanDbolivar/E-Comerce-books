@@ -28,10 +28,18 @@ function Success() {
 
   return (
     <>
-      <h1>Compra exitosa</h1>
-      <Link to="/">
-        <button>Regresar al comercio</button>
-      </Link>
+      <section className="hero is-info is-fullheight">
+        <div className="hero-body">
+          <div className="container has-text-centered">
+            <p className="title">Enhora buena! Tu compra ha sido exitosa</p>
+            <p className="subtitle">
+              <Link to="/">
+                <button>Regresar al comercio</button>
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

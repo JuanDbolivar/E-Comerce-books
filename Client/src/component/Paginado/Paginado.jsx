@@ -20,23 +20,23 @@ function Paginado() {
   };
 
   return (
-    <div className="pagination">
+    <div className="paginations">
       <button
         onClick={handlePaginaAnterior}
         disabled={page === 1}
-        className="orderButton"
+        className="button is-info"
       >
-        Página Anterior
+        ⇦
       </button>
-      <span className="spanPaginado">
+      <span>
         Página {page} de {totalData}
       </span>
       <button
         onClick={handlePaginaSiguiente}
         disabled={page >= totalData || totalData === 0 ? true : false}
-        className="orderButton"
+        className="button is-info"
       >
-        Página Siguiente
+        ⇨
       </button>
     </div>
   );

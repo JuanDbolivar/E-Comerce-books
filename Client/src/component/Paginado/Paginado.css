@@ -1,24 +1,14 @@
-.orderButton {
-    padding: 8px 12px;
-    background-color: #ffffff;
-    color: #0a0a0a;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-top: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1)
-  }
-
-.orderButton:hover {
-    background-color: #2e54d1;
-    color: #fff;
-  }
-  span{
-    color: #fff;
-    font-size: 20px;
-    }
-    .spanPaginado{
-      color: #0a0a0a;
-      font-family:Arial, Helvetica, sans-serif
-    }
+.paginations {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 80%;
+  background-color: hsl(207deg, 61%, 53%);
+  width: 12.5em;
+  border-radius: 5px;
+}
+.paginations span {
+  color: #fff;
+  font-size: medium;
+  font-family: Arial, Helvetica, sans-serif;
+}

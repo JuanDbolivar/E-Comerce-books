@@ -17,7 +17,9 @@ function Detail() {
   const { detail, commentations, enviado } = useSelector(
     (state) => state.bookDetail
   );
-  const { purchased_books, email, userBooks } = useSelector((state) => state.user);
+  const { purchased_books, email, userBooks } = useSelector(
+    (state) => state.user
+  );
 
   const { putOrRemoveBookToCart } = CartHandler();
 
@@ -29,12 +31,11 @@ function Detail() {
         const { data } = await axios(`${url}book/${id}/`);
 
         if (data) {
-          console.log("data", data);
           dispatch(setBookDetail(data));
           dispatch(setCommentations(data.comments));
         }
       } catch (error) {
-        console.log("error", error);
+        console.log("errorDetail: ", error.message);
       }
     };
     detailHandler(id);
