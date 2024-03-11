@@ -1,26 +1,36 @@
-.Contenido-selects {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  border: 1px solid;
-  border-radius: 8px;
-  margin-top: 38%;
-  background-color: #2e54d1;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+.filters-container h2 {
+  font-size: larger;
+  color: hsl(207, 89%, 25%);
+  font-weight: 600;
 }
 
-.Contenido-selects label {
-  color: white;
+.filters-container h1 {
+  font-size: larger;
+  color: hsl(218, 55%, 47%);
+  font-weight: bold;
 }
 
-.li {
-  width: 300px;
-  margin: 10px;
-}
-.orden-boton {
-  display: flex;
+.scroll {
+  height: 40em;
+  overflow: auto;
 }
 
-.clear {
-  margin: 5% 4%;
+/* Cambia todo el scrollbar */
+.scroll::-webkit-scrollbar {
+  width: 10px; /* Grosor del scrollbar */
+}
+
+/* Cambia el fondo del track (la pista del scrollbar) */
+.scroll::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color de fondo */
+}
+
+/* Cambia el thumb (la parte que se desplaza) */
+.scroll::-webkit-scrollbar-thumb {
+  background: #888; /* Color del thumb */
+}
+
+/* Cambia el thumb al pasar el mouse */
+.scroll::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color del thumb al pasar el mouse */
 }

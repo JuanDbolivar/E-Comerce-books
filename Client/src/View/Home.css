@@ -2,14 +2,45 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
 }
-
 
 .page {
-  margin: 0 4%;
+  margin: 6% 4% -3% 4%;
 }
 
-.pageBottom {
-  margin: 0 4% 3% 4%;
+.to-filter {
+  position: absolute;
+  top: 18%;
+  left: 4%;
+  width: 6em;
+  height: 2.8em;
+  border-radius: 5px;
+  background-color: hsl(207deg, 61%, 53%);
+  border: none;
+  cursor: pointer;
+  z-index: 9;
+  font-size: medium;
+}
+
+.to-filter:hover {
+  background-color: #3488ce;
+}
+
+.exit {
+  position: absolute;
+  top: 14%;
+  left: 25%;
+  z-index: 11;
+}
+
+.filters {
+  position: absolute;
+  top: 11.9%;
+  left: 0%;
+  z-index: 10;
+  background-color: white;
+  border-radius: 5px;
+  width: 30%;
+  padding: 1em;
+  font-size: large;
 }

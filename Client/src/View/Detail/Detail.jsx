@@ -70,8 +70,8 @@ function Detail() {
             <button
               className={
                 userBooks.find((book) => book.id === detail.id)
-                  ? " button is-danger"
-                  : "button is-primary"
+                  ? " button is-danger b"
+                  : "button is-primary b"
               }
               onClick={() => {
                 putOrRemoveBookToCart(detail.id);

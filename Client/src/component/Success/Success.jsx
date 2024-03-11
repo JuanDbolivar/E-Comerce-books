@@ -34,7 +34,9 @@ function Success() {
             <p className="title">Enhora buena! Tu compra ha sido exitosa</p>
             <p className="subtitle">
               <Link to="/">
-                <button>Regresar al comercio</button>
+                <button className="button is-primary">
+                  Regresar al comercio
+                </button>
               </Link>
             </p>
           </div>

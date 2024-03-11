@@ -1,5 +1,5 @@
 import "./FormSelect.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FilterHandler } from "../../handlers/FilterHandler/FilterHandler";
 import {
@@ -18,7 +18,6 @@ function FormSelect() {
     (state) => state.bookFilter
   );
 
-  const [filter, setFilter] = useState(false);
   const {
     handleUnchecked,
     handlerCheckbox,
@@ -33,13 +32,18 @@ function FormSelect() {
   }, [page]);
 
   return (
-    <div>
-      <div>
+    <div className="filters-container">
+      <div className="">
+        <h1>Filtros</h1>
+      </div>
+      <hr />
+      <div className="scroll">
         <div>
           <h2>Generos:</h2>
           {gender ? (
             <>
               <input
+                className="checkbox"
                 type="checkbox"
                 name=""
                 id=""
@@ -56,6 +60,7 @@ function FormSelect() {
               {dataG.map((g, index) => (
                 <div key={index}>
                   <input
+                    className="checkbox"
                     type="checkbox"
                     name={g}
                     id={g}
@@ -84,6 +89,7 @@ function FormSelect() {
           {author ? (
             <>
               <input
+                className="checkbox"
                 type="checkbox"
                 name=""
                 id=""
@@ -99,8 +105,9 @@ function FormSelect() {
             <>
               {dataA.map((a, index) => (
                 <div key={index}>
-                  <label htmlFor="">
+                  <label htmlFor="" className="checkbox">
                     <input
+                      className="checkbox"
                       type="checkbox"
                       value={a}
                       onChange={async (e) => {
@@ -127,6 +134,7 @@ function FormSelect() {
           {year ? (
             <>
               <input
+                className="checkbox"
                 type="checkbox"
                 name=""
                 id=""
@@ -144,6 +152,7 @@ function FormSelect() {
               {dataY.map((y, index) => (
                 <div key={index}>
                   <input
+                    className="checkbox"
                     type="checkbox"
                     name=""
                     id=""
@@ -166,90 +175,11 @@ function FormSelect() {
             </>
           )}
         </div>
+        <hr />
+        <button onClick={handlerClearFilters} className="button is-info">
+          Borrar filtros
+        </button>
       </div>
-      <hr />
-      <button
-        onClick={() => {
-          setFilter(!filter);
-        }}
-      >
-        Orden
-      </button>
-      <br />
-      {filter ? (
-        <div>
-          {value ? (
-            <>
-              <label htmlFor="value">
-                <input
-                  type="checkbox"
-                  checked={value}
-                  onChange={() => {
-                    dispatch(setBookValue({ value: "" }));
-                    handleUnchecked(value, true);
-                  }}
-                />
-                {value === "-price" && "Mayor precio"}
-                {value === "price" && "Menor precio"}
-                {value === "-title" && "Descendente"}
-                {value === "title" && "Ascendente"}
-              </label>
-            </>
-          ) : (
-            <div>
-              <label htmlFor="">
-                <input
-                  type="checkbox"
-                  value="-price"
-                  onChange={(e) => {
-                    dispatch(setBookValue({ value: e.target.value }));
-                    handlerCheckbox(e.target.value, true);
-                  }}
-                />
-                Mayor precio
-              </label>
-              <br />
-              <label htmlFor="">
-                <input
-                  type="checkbox"
-                  value="price"
-                  onChange={(e) => {
-                    dispatch(setBookValue({ value: e.target.value }));
-                    handlerCheckbox(e.target.value, true);
-                  }}
-                />
-                Menor precio
-              </label>
-              <br />
-              <label htmlFor="">
-                <input
-                  type="checkbox"
-                  value="title"
-                  onChange={(e) => {
-                    dispatch(setBookValue({ value: e.target.value }));
-                    handlerCheckbox(e.target.value, true);
-                  }}
-                />
-                Ascendente
-              </label>
-              <br />
-              <label htmlFor="">
-                <input
-                  type="checkbox"
-                  value="-title"
-                  onChange={(e) => {
-                    dispatch(setBookValue({ value: e.target.value }));
-                    handlerCheckbox(e.target.value, true);
-                  }}
-                />
-                Descendente
-              </label>
-            </div>
-          )}
-        </div>
-      ) : null}
-      <button onClick={handlerClearFilters}>Borrar filtros</button>
-      <hr />
     </div>
   );
 }

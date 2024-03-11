@@ -87,9 +87,7 @@ function RegisterLogin() {
         const email = user.user.email;
         if (id) {
           try {
-            const { data } = await axios(
-              `${url}user/?search=${id}`
-            );
+            const { data } = await axios(`${url}user/?search=${id}`);
             if (data) {
               const banned = data.banned;
               const purchased_books = data.purchased_books;
@@ -121,9 +119,7 @@ function RegisterLogin() {
         const email = user.user.email;
         if (id) {
           try {
-            const { data } = await axios(
-              `${url}user/?search=${id}`
-            );
+            const { data } = await axios(`${url}user/?search=${id}`);
             if (data.length !== 0) {
               console.log("data", data);
               const banned = data.banned;
@@ -134,20 +130,15 @@ function RegisterLogin() {
               }
             } else {
               try {
-                const { data } = await axios.post(
-                  `${url}user/`,
-                  {
-                    id,
-                    name,
-                    email,
-                  }
-                );
+                const { data } = await axios.post(`${url}user/`, {
+                  id,
+                  name,
+                  email,
+                });
                 if (data) {
                   console.log("data2", data);
                   try {
-                    const { data } = await axios(
-                      `${url}user/?search=${id}`
-                    );
+                    const { data } = await axios(`${url}user/?search=${id}`);
                     if (data) {
                       console.log("data3", data);
                       const banned = data.banned;
@@ -192,7 +183,7 @@ function RegisterLogin() {
       ) : (
         <>
           <button
-           className='button is-light'
+            className="button is-light"
             onClick={() => {
               setIsModal(!isModal);
             }}
@@ -217,6 +208,7 @@ function RegisterLogin() {
                   <br />
                   <label htmlFor="emailRegis">Correo: </label>
                   <input
+                    className="input is-link "
                     id="emailRegis"
                     type="text"
                     name="email"
@@ -226,6 +218,7 @@ function RegisterLogin() {
                   />
                   <label htmlFor="passwordRegis">Contraseña: </label>
                   <input
+                    className="input is-link"
                     id="passwordRegis"
                     type="password"
                     name="password"
@@ -235,6 +228,7 @@ function RegisterLogin() {
                   />
                   <label htmlFor="nombreRegis">Nombre: </label>
                   <input
+                    className="input is-link"
                     id="nombreRegis"
                     type="nombre "
                     name="nombre "
@@ -243,11 +237,11 @@ function RegisterLogin() {
                     }}
                   />
                   <br />
-                  <button className="buttonLogin" onClick={registerHandler}>
+                  <button className="button is-link " onClick={registerHandler}>
                     Registrarse
                   </button>
                   <br />
-                  <button className="buttonLogin" onClick={loginWithGoogle}>
+                  <button className="button is-link " onClick={loginWithGoogle}>
                     Ingresar con Google
                   </button>
                   <h4 className="O">O</h4>
@@ -259,6 +253,7 @@ function RegisterLogin() {
                   <br />
                   <label htmlFor="emailLog">Correo: </label>
                   <input
+                    className="input is-link"
                     id="emailLog"
                     type="text"
                     name="email"
@@ -268,6 +263,7 @@ function RegisterLogin() {
                   />
                   <label htmlFor="passwordLog">Contraseña: </label>
                   <input
+                    className="input is-link"
                     id="passwordLog"
                     type="password"
                     name="password"
@@ -276,14 +272,14 @@ function RegisterLogin() {
                     }}
                   />
                   <br />
-                  <button className="buttonLogin" onClick={loginHandler}>
+                  <button className="button is-link " onClick={loginHandler}>
                     Ingresar
                   </button>
                   <br />
                 </>
               )}
               <button
-                className="buttonLogin"
+                className="button is-link "
                 onClick={() => {
                   setIngresar(!ingresar);
                 }}

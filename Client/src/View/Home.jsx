@@ -3,8 +3,9 @@ import axios from "axios";
 import Cards from "../component/Cards/Cards";
 import Paginado from "../component/Paginado/Paginado";
 import FormSelect from "../component/FormSelect/FormSelect";
+import Order from "../component/Order/Order";
 import { url } from "../values/values";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setBook,
@@ -15,6 +16,8 @@ import {
 } from "../redux/reducers/Books/booksSlice";
 
 function Home({ rerenderKey }) {
+  const [toFilter, setToFilter] = useState(false);
+
   const { author, year, gender, value, organization, page, filters } =
     useSelector((state) => state.bookFilter);
   const { totalData, books } = useSelector((state) => state.book);
@@ -59,12 +62,33 @@ function Home({ rerenderKey }) {
         <Paginado />
       </div>
       <div className="columns">
-        {/* <aside> */}
-        <div className=" column is-one-fifth">
-          <FormSelect />
-        </div>
-        {/* </aside> */}
+        <button
+          className="to-filter"
+          onClick={() => {
+            setToFilter(!toFilter);
+          }}
+        >
+          Filtrar 🔎
+        </button>
 
+        {toFilter ? (
+          <>
+            <div className="exit">
+              <button
+                className="delete is-large"
+                onClick={() => {
+                  setToFilter(!toFilter);
+                }}
+              ></button>
+            </div>
+            <div className="filters">
+              <FormSelect />
+            </div>
+          </>
+        ) : null}
+        <div>
+          <Order />
+        </div>
         <div className="column">
           {books.length === 0 && totalData === 1 ? (
             <div className="content">
