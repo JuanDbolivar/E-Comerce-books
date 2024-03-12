@@ -16,7 +16,7 @@ function CardBook({ book }) {
           <Link to={`/detail/${id}`}>
             <img src={image} alt="book's image" />
             <h1>{title}</h1>
-            <h3 className="price">Precio: US$ {price} </h3>
+            <h3 className="price">USD$ {price} </h3>
           </Link>
           <div className="card-button">
             <button
@@ -45,7 +45,7 @@ function CardBook({ book }) {
             <h1>{title}</h1>
           </div>
           <div>
-            <h3 className="price">Precio: US$ {price} </h3>
+            <h3 className="price">USD$ {price} </h3>
           </div>
           <div className="card-tarjeta">
             <button disabled className="button is-primary">

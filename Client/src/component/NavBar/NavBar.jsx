@@ -12,6 +12,12 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && searchTerm) {
+      handleSearch();
+    }
+  };
+
   const handleSearch = async () => {
     try {
       if (searchTerm.trim() !== "") {
@@ -63,6 +69,7 @@ const Navbar = () => {
                 placeholder="Buscar libros por titulo"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
               <button className="button is-light" onClick={handleSearch}>
                 Buscar
@@ -89,7 +96,8 @@ const Navbar = () => {
         </div>
       </nav>
       <br />
-      <br /><br />
+      <br />
+      <br />
     </>
   );
 };
