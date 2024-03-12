@@ -1,7 +1,10 @@
 .caracteristicas {
   position: absolute;
   top: 18%;
-  left: 80.5%;
+  left: 83%;
   border-radius: 5px;
 }
 
+.dropdown-item input {
+  margin: 2%;
+}

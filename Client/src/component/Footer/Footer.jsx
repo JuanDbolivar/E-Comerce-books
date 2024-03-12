@@ -19,7 +19,6 @@ function Footer() {
           </Link>
         </div>
         <div className="column">
-          <a href="#arriba">⬆︎⬆︎</a>
           <br />
           <h3>Direccion: Calle falsa 123</h3>
           <h3>pflibrosgrupo07@gmail.com</h3>

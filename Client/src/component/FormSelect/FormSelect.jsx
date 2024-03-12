@@ -43,7 +43,6 @@ function FormSelect() {
           {gender ? (
             <>
               <input
-                className="checkbox"
                 type="checkbox"
                 name=""
                 id=""
@@ -60,7 +59,6 @@ function FormSelect() {
               {dataG.map((g, index) => (
                 <div key={index}>
                   <input
-                    className="checkbox"
                     type="checkbox"
                     name={g}
                     id={g}
@@ -89,7 +87,6 @@ function FormSelect() {
           {author ? (
             <>
               <input
-                className="checkbox"
                 type="checkbox"
                 name=""
                 id=""
@@ -105,9 +102,8 @@ function FormSelect() {
             <>
               {dataA.map((a, index) => (
                 <div key={index}>
-                  <label htmlFor="" className="checkbox">
+                  <label htmlFor="">
                     <input
-                      className="checkbox"
                       type="checkbox"
                       value={a}
                       onChange={async (e) => {
@@ -134,7 +130,6 @@ function FormSelect() {
           {year ? (
             <>
               <input
-                className="checkbox"
                 type="checkbox"
                 name=""
                 id=""
@@ -152,7 +147,6 @@ function FormSelect() {
               {dataY.map((y, index) => (
                 <div key={index}>
                   <input
-                    className="checkbox"
                     type="checkbox"
                     name=""
                     id=""

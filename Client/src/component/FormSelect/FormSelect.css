@@ -10,8 +10,12 @@
   font-weight: bold;
 }
 
+.filters-container input {
+  margin: 2%;
+}
+
 .scroll {
-  height: 43.3em;
+  height: 45.5em;
   overflow: auto;
 }
 

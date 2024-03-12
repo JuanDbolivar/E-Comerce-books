@@ -1,14 +1,15 @@
-import axios from "axios";
-import { url } from "../../values/values";
 import styles from "./NavBar.module.css";
 import logo from "./../../img/logo2.png";
+import axios from "axios";
 import RegisterLogin from "../RegisterLogin/RegisterLogin";
+import { url } from "../../values/values";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 import { setBook, setTotalData } from "../../redux/reducers/Books/booksSlice";
 
 const Navbar = () => {
+  const { totalBooks } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -84,6 +85,7 @@ const Navbar = () => {
             </NavLink>
             <Link to="/cart" className="navbar-item">
               Carrrito
+              <div className={styles.signal}>{totalBooks}</div>
             </Link>
           </div>
           <div className="navbar-end">

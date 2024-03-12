@@ -12,13 +12,7 @@ function Cart() {
   const dispatch = useDispatch();
   const { userBooks, totalBooks } = useSelector((state) => state.user);
   const { totalUSD } = useSelector((state) => state.sendUser);
-  const {
-    removeBookFromCart,
-    addBookToCart,
-    clearBookCart,
-    // buyBooks,
-    // checkBook,
-  } = CartHandler();
+  const { removeBookFromCart, addBookToCart, clearBookCart } = CartHandler();
 
   const [buy, setBuy] = useState(false);
 
@@ -27,13 +21,6 @@ function Cart() {
     const totalUSD = booksBack.reduce((suma, numero) => suma + numero, 0);
     return parseFloat(totalUSD.toFixed(2));
   }, [totalBooks]);
-
-  // useEffect(() => {
-  //   const booksBack = userBooks.map((item) => item.price * item.quantity);
-  //   const totalUSD = booksBack.reduce((suma, numero) => suma + numero, 0);
-  //   const totalUSDFormatted = totalUSD.toFixed(2);
-  //   dispatch(setTotalUSD(parseFloat(totalUSDFormatted)));
-  // }, [totalBooks]);
 
   useEffect(() => {
     dispatch(setTotalUSD(total));

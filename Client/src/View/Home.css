@@ -5,9 +5,11 @@
 }
 
 .page {
-  margin: 6% 4% -3% 4%;
+  margin: 6% 1% -3% 4%;
 }
-
+.pageBottom{
+  margin: 0% 1% 3% 4%;
+}
 .to-filter {
   position: absolute;
   top: 18%;

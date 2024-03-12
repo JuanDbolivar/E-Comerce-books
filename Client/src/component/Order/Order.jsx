@@ -37,9 +37,8 @@ function Order() {
             <div className="dropdown-item">
               {value ? (
                 <>
-                  <label htmlFor="value" className="checkbox">
+                  <label htmlFor="value">
                     <input
-                      className="checkbox"
                       type="checkbox"
                       checked={value}
                       onChange={() => {
@@ -55,7 +54,7 @@ function Order() {
                 </>
               ) : (
                 <div>
-                  <label htmlFor="" className="checkbox">
+                  <label htmlFor="">
                     <input
                       type="checkbox"
                       value="-price"
@@ -67,7 +66,7 @@ function Order() {
                     Precio, mayor a menor
                   </label>
                   <br />
-                  <label htmlFor="" className="checkbox">
+                  <label htmlFor="">
                     <input
                       type="checkbox"
                       value="price"
@@ -79,7 +78,7 @@ function Order() {
                     Precio, menor a mayor
                   </label>
                   <br />
-                  <label htmlFor="" className="checkbox">
+                  <label htmlFor="">
                     <input
                       type="checkbox"
                       value="title"
@@ -91,7 +90,7 @@ function Order() {
                     Alfabéticamente, A-Z
                   </label>
                   <br />
-                  <label htmlFor="" className="checkbox">
+                  <label htmlFor="">
                     <input
                       type="checkbox"
                       value="-title"
