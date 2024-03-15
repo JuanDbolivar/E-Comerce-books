@@ -87,10 +87,10 @@ function RegisterLogin() {
         const email = user.user.email;
         if (id) {
           try {
-            const { data } = await axios(`${url}user/?search=${id}`);
+            const { data } = await axios.get(`${url}user/?search=${id}`);
             if (data) {
-              const banned = data.banned;
-              const purchased_books = data.purchased_books;
+              const banned = data[0].banned;
+              const purchased_books = data[0].purchased_books;
               dispatch(setUser({ id, name, email, banned }));
               if (purchased_books) {
                 dispatch(setIdBooks({ purchased_books }));
@@ -176,7 +176,7 @@ function RegisterLogin() {
       {name ? (
         <>
           <h3 className="bienvenido">Bienvenido, {name} </h3>
-          <button className="buttonLogout" onClick={logoutHandler}>
+          <button className="button is-light" onClick={logoutHandler}>
             Logout
           </button>
         </>

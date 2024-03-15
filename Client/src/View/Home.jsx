@@ -31,7 +31,7 @@ function Home({ rerenderKey }) {
           const { data } = await axios(`
           ${url}book/?page_size=${page}`);
           if (data) {
-            const totalPages = Math.ceil(data.count / 10);
+            const totalPages = Math.ceil(data.count / 21);
             dispatch(setTotalData(totalPages));
             dispatch(setBook(data.results));
           }

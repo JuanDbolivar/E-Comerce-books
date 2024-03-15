@@ -8,7 +8,6 @@ const initialState = {
   userBooks: [],
   totalBooks: 0,
   purchased_books: [],
-  
 };
 
 export const userSlice = createSlice({
@@ -23,13 +22,13 @@ export const userSlice = createSlice({
     },
 
     setIdBooks: (state, action) => {
-      state.purchased_books = action.payload.purchased_books;
-      // const newIdBooks = action.payload.purchased_books;
-      // const uniqueNewIdBooks = newIdBooks.filter(
-      //   (id) => !state.purchased_books.includes(id)
-      // );
+      // state.purchased_books = action.payload.purchased_books;
+      const newIdBooks = action.payload.purchased_books;
+      const uniqueNewIdBooks = newIdBooks.filter(
+        (id) => !state.purchased_books.includes(id)
+      );
 
-      // state.purchased_books = [...state.purchased_books, ...uniqueNewIdBooks];
+      state.purchased_books = [...state.purchased_books, ...uniqueNewIdBooks];
     },
 
     setUserBooks: (state, action) => {

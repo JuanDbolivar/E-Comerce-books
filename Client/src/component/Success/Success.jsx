@@ -1,10 +1,16 @@
 import axios from "axios";
 import { url } from "../../values/values";
+import { unSetUserBooks } from "../../redux/reducers/Users/UserSlice";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setIdBooks } from "../../redux/reducers/Users/UserSlice";
 
 function Success() {
+  const dispatch = useDispatch();
+
+  const { id } = useSelector((state) => state.user);
+
   const { userName, userEmail, booksName, userAddress, totalUSD } = useSelector(
     (state) => state.sendUser
   );
@@ -18,12 +24,22 @@ function Success() {
           message,
         });
         if (data) {
+          try {
+            const { data } = await axios.get(`${url}user/${id}`);
+            if (data) {
+              const purchased_books = data.purchased_books;
+              dispatch(setIdBooks({ purchased_books }));
+            }
+          } catch (error) {
+            console.log("error-callUser: ", error.message);
+          }
         }
       } catch (error) {
         console.log("succesError: ", error);
       }
     };
     success();
+    dispatch(unSetUserBooks()); //clear the cart
   }, []);
 
   return (

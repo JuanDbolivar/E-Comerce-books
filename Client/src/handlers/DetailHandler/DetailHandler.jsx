@@ -8,14 +8,15 @@ export function DetailHandler() {
   const { detail } = useSelector((state) => state.bookDetail);
   const { id } = useSelector((state) => state.user);
 
-
   const onSubmit = async (commentation) => {
     try {
       if (commentation) {
-        const { data } = await axios.post(
-          `http://localhost:8000/review/?book=${detail.id}&user=${id}`,
-          commentation
-        );
+        const review = {
+          commentations: commentation,
+          book: detail.id,
+          user_name: id,
+        };
+        const { data } = await axios.post(`${url}review/`, review);
 
         if (data) {
           dispatch(setEnviado(true));

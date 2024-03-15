@@ -20,10 +20,9 @@ export function FilterHandler() {
     const { data } = await axios.get(`${urlApi}`);
 
     if (data) {
-      const totalPages = Math.ceil(data.count / 10);
+      const totalPages = Math.ceil(data.count / 21);
       dispatch(setTotalData(totalPages));
       dispatch(setBook(data.results));
-      // dispatch(setBookPage({ page: 1 }));
     }
   };
 
@@ -56,7 +55,6 @@ export function FilterHandler() {
           }
         } else {
           const urlApi = `${url}book/?page_size=1`;
-          // dispatch(setBookPage({ page: 1 }));
           fetchData(urlApi);
         }
       } catch (error) {
@@ -74,7 +72,6 @@ export function FilterHandler() {
             "&search="
           )}&search=${e}`;
           fetchData(urlApi);
-          // dispatch(setBookPage({ page: 1 }));
         } else if (filters.length === 0) {
           const urlApi = `${url}book/?ordering=${e}&page_size=1`;
           fetchData(urlApi);

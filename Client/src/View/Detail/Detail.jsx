@@ -90,7 +90,7 @@ function Detail() {
           <div key={index} className="box">
             <article>
               <p>
-                <strong> {comment.user.name}</strong>
+                {/* <strong> {comment.user.name}</strong> */}
                 <br />
                 Reseña: {comment.commentations}
               </p>

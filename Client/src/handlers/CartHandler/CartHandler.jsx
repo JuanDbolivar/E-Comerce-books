@@ -68,6 +68,7 @@ function CartHandler() {
     }
     if (id && email) {
       try {
+        const userBooks = [...purchased_books];
         await axios.patch(`${url}user/${id}/`, {
           purchased_books,
         });
@@ -75,7 +76,6 @@ function CartHandler() {
         console.log("errorAxios", error.message);
       }
     }
-    dispatch(unSetUserBooks()); //clear the cart
   };
 
   return {

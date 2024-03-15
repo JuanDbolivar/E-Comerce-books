@@ -21,23 +21,22 @@ function App() {
     setRerenderKey((prevKey) => prevKey + 1);
   };
 
-  // useEffect(() => {
-  //   banned && navigate("/banned");
-  // }, [banned]);
+  useEffect(() => {
+    banned && navigate("/banned");
+  }, [banned]);
 
   return (
     <>
-      {/* {location.pathname !== "/banned" &&
-      location.pathname !== "/checkout/success" ? (
-      ) : null} */}
-      <NavBar rerenderHome={rerenderHome} />
+      {location.pathname !== "/banned" ? (
+        <NavBar rerenderHome={rerenderHome} />
+      ) : null}
 
       <Routes>
         <Route path="/" element={<Home rerenderKey={rerenderKey} />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout/success" element={<Success />} />
-        {/* <Route exact path="/banned" element={<Banned />} /> */}
+        <Route exact path="/banned" element={<Banned />} />
         <Route exact path="/payment" element={<StripeCheck />} />
       </Routes>
       <Footer />

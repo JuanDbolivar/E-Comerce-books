@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setIdBooks } from "../../redux/reducers/Users/UserSlice";
 import { setTotalUSD } from "../../redux/reducers/SendUser/sendUserSlice";
-import axios from "axios";
 
 function Cart() {
   const dispatch = useDispatch();
