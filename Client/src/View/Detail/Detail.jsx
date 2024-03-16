@@ -31,6 +31,7 @@ function Detail() {
         const { data } = await axios(`${url}book/${id}/`);
 
         if (data) {
+          console.log('data', data)
           dispatch(setBookDetail(data));
           dispatch(setCommentations(data.comments));
         }
@@ -90,7 +91,7 @@ function Detail() {
           <div key={index} className="box">
             <article>
               <p>
-                {/* <strong> {comment.user.name}</strong> */}
+                <strong> {comment.user_name}</strong>
                 <br />
                 Reseña: {comment.commentations}
               </p>

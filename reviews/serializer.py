@@ -1,26 +1,14 @@
 # serializers.py (reviews)
-# from rest_framework import serializers
-# from .models import Reviews
-
-
-# class ReviewsSerializer(serializers.ModelSerializer):
-#     user_name = serializers.SerializerMethodField()
-
-#     def get_user_name(self, obj):
-#         return obj.user.name if obj.user else None
-
-#     class Meta:
-#         model = Reviews
-#         fields = ['id', 'commentations', 'book', 'user_name']
-
-# serializers.py (reviews)
 from rest_framework import serializers
 from .models import Reviews
+from books.models import Books
 
 
 class ReviewsSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    book_id = serializers.PrimaryKeyRelatedField(
+        queryset=Books.objects.all(), source='book', write_only=True)
+    user_name = serializers.CharField( read_only=True)
 
     class Meta:
         model = Reviews
-        fields = ['id', 'commentations', 'book', 'user']
+        fields = ['id', 'commentations', 'book_id', 'user_name', 'book']

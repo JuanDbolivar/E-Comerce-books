@@ -1,19 +1,19 @@
 # serializer(book)
 from rest_framework import serializers
 from .models import Books, Reviews
-from users.models import Users
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=Users.objects.all())
+    user_name = serializers.CharField()
 
     class Meta:
         model = Reviews
-        fields = ['commentations', 'user']
+        fields = '__all__'
 
 
 class BooksSerializer(serializers.ModelSerializer):
-    reviews = ReviewSerializer(many=True, read_only=True)
+    reviews = ReviewSerializer(
+        many=True, read_only=True, source='book_reviews')
 
     class Meta:
         model = Books

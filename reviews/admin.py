@@ -7,6 +7,6 @@ from .models import Reviews
 
 @admin.register(Reviews)
 class AdminReviews(admin.ModelAdmin):
-    list_display = ['commentations', 'book', 'user']
-    list_filter=['book','user']
+    list_display = ['commentations', 'book', ]
+    list_filter=['book']
     search_fields=['book']
