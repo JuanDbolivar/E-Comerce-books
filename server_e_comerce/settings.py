@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-gw&v+xau$2!jx6wdtlzeu4ixe@ozvb@!0=4pic-g=$hf*7gj9v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 # Application definition
 
@@ -37,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "corsheaders",
+    # "corsheaders",
     'rest_framework',
     'books',
     'reviews',
@@ -48,7 +47,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
+    # "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -130,7 +129,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+# CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
